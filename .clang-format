@@ -77,7 +77,7 @@ BreakBeforeTernaryOperators:	true
 # 在构造函数的初始化列表的逗号前换行
 BreakConstructorInitializersBeforeComma:	false
 # 每行字符的限制，0表示没有限制
-ColumnLimit:	100
+ColumnLimit:	0
 # 描述具有特殊意义的注释的正则表达式，它不应该被分割为多行或以其它方式改变
 CommentPragmas:	'^ IWYU pragma:'
 # 构造函数的初始化列表要么都在同一行，要么都各自一行
@@ -118,7 +118,7 @@ MacroBlockBegin:	''
 # 结束一个块的宏的正则表达式
 MacroBlockEnd:	''
 # 连续空行的最大数量
-MaxEmptyLinesToKeep:	1
+MaxEmptyLinesToKeep:	2
 # 命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
 NamespaceIndentation:	Inner
 # 使用ObjC块时缩进宽度
@@ -142,7 +142,7 @@ PenaltyReturnTypeOnItsOwnLine:	60
 # 指针和引用的对齐: Left, Right, Middle
 PointerAlignment:	Left
 # 允许重新排版注释
-ReflowComments:	true
+ReflowComments:	false
 # 允许排序#include
 SortIncludes:	true
 # 在C风格类型转换后添加空格
@@ -156,15 +156,15 @@ SpaceInEmptyParentheses:	false
 # 在尾随的评论前添加的空格数(只适用于//)
 SpacesBeforeTrailingComments:	1
 # 在尖括号的<后和>前添加空格
-SpacesInAngles:	true
+SpacesInAngles:	false
 # 在容器(ObjC和JavaScript的数组和字典等)字面量中添加空格
 SpacesInContainerLiterals:	true
 # 在C风格类型转换的括号中添加空格
-SpacesInCStyleCastParentheses:	true
+SpacesInCStyleCastParentheses:	false
 # 在圆括号的(后和)前添加空格
-SpacesInParentheses:	true
+SpacesInParentheses:	false
 # 在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
-SpacesInSquareBrackets:	true
+SpacesInSquareBrackets:	false
 # 标准: Cpp03, Cpp11, Auto
 Standard:	Cpp11
 # tab宽度
