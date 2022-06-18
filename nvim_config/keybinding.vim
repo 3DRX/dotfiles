@@ -35,6 +35,6 @@ vnoremap K :m '<-2<CR>gv=gv
 vmap $ g_
 
 " formatting code
-map <C-f> :pyf ~/clang-format.py<cr>
+map <C-f> :pyf ~/Configurations/clang-format.py<cr>
 
 

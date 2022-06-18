@@ -27,7 +27,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'https://github.com/github/copilot.vim'
 
 " debugger
-Plug 'https://github.com/puremourning/vimspector'
+"Plug 'https://github.com/puremourning/vimspector'
 " markdown preview
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
