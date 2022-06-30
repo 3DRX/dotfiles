@@ -7,13 +7,13 @@ let mapleader=" "
 " imports
 runtime ./plug.vim
 runtime ./keybinding.vim
-runtime ./plugins/coc.vim
 runtime ./plugins/nerdtree.vim
 "runtime ./plugins/telescope.vim
 runtime ./plugins/NERDCommenter.vim
 runtime ./plugins/gitgutter.vim
-runtime ./plugins/neoformat.vim
+"runtime ./plugins/neoformat.vim
 "runtime ./colors/NeoSolarized.vim
+:lua require('init')
 
 "------------------------------------------------------------------------------------
 
@@ -28,8 +28,6 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set scrolloff=200
-"set cursorline
-"set cursorcolumn
 set autoindent
 set smarttab
 set incsearch

@@ -8,3 +8,5 @@ let g:neoformat_enabled_c = ['clangformat']
 let g:neoformat_try_node_exe = 1
 let g:neoformat_enabled_javascript = ['prettier']
 let g:neoformat_enabled_html = ['prettier']
+let g:neoformat_enabled_python = ['']
+

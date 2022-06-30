@@ -12,16 +12,20 @@ vmap <silent> <C-_> <plug>NERDCommenterToggle
 
 " copy to system clipboard via <Ctrl-c> in visual mode.
 vnoremap <C-c> "+y
+
 " select all
 nnoremap <C-a> ggVG
+
 " split window vertically
 nnoremap <silent> <C-\> :vsplit<CR><C-w>l
 nnoremap <silent> <C-w>s :split<CR><C-w>j
+
 " close window
 nnoremap <C-q> :q<CR>
+
 " save file
-nnoremap <C-s> :Neoformat<CR>:w<CR>
-imap <c-s> <Esc>:Neoformat<CR>:w<CR>a
+nnoremap <C-s> :lua vim.lsp.buf.format()<CR>:w<CR>
+imap <c-s> <Esc>:lua vim.lsp.buf.format()<CR>:w<CR>a
 
 " fix jump list
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
@@ -37,8 +41,5 @@ nmap <C-m> <C-v>
 
 " fix visual mode
 vmap $ g_
-
-" formatting code
-map <C-f> :pyf ~/dotfiles/clang-format.py<cr>
 
 
