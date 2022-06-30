@@ -32,10 +32,13 @@ nmap <silent> <leader>a :CocDiagnostics<CR>
 "command! -nargs=0 Format :call CocActionAsync('format')
 
 " settings of c/cpp highlight
-"let g:cpp_class_scope_highlight = 1
+let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
-"let g:cpp_class_decl_highlight = 1
+let g:cpp_class_decl_highlight = 1
 "let g:cpp_posix_standard = 1
 "let g:cpp_experimental_simple_template_highlight = 1
 "let g:cpp_concepts_highlight = 1
+"
+" StatusLine
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 

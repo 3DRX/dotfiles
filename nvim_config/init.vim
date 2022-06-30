@@ -9,16 +9,15 @@ runtime ./plug.vim
 runtime ./keybinding.vim
 runtime ./plugins/coc.vim
 runtime ./plugins/nerdtree.vim
-runtime ./plugins/telescope.vim
+"runtime ./plugins/telescope.vim
 runtime ./plugins/NERDCommenter.vim
 runtime ./plugins/gitgutter.vim
-runtime ./plugins/formatting.vim
-runtime ./colors/NeoSolarized.vim
+runtime ./plugins/neoformat.vim
+"runtime ./colors/NeoSolarized.vim
 
 "------------------------------------------------------------------------------------
 
 set number
-set relativenumber
 set cmdheight=2
 filetype on
 filetype indent on
@@ -52,25 +51,28 @@ set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
 set guifont=DejaVuSansMono\ Nerd\ Font:h20
 let g:neovide_transparency=0.6
 
-" look
+" colorscheme
 let g:airline_theme='papercolor'
 if exists("&termguicolors") && exists("&winblend")
-  syntax enable
-  set termguicolors
-  set winblend=0
-  set wildoptions=pum
-  set pumblend=5
-  set background=dark
-  "" Use NeoSolarized
-  let g:neosolarized_termtrans=1
-  let g:neosolarized_contrast="high"
-  runtime ./colors/NeoSolarized.vim
-  colorscheme NeoSolarized
+    syntax enable
+    set termguicolors
+    set winblend=0
+    set wildoptions=pum
+    set pumblend=5
+    set background=dark
+    "" Use NeoSolarized
+    "let g:neosolarized_termtrans=1
+    "let g:neosolarized_contrast="high"
+    "runtime ./colors/NeoSolarized.vim
+    "colorscheme NeoSolarized
+    "" Use TokyoNight
+    let g:tokyonight_transparent=1
+    let g:tokyonight_colors = {
+                \ 'comment' : 'red',
+                \ }
+    colorscheme tokyonight
 endif
-"colorscheme gruvbox
-"set background=dark
-" setting transparent vim
-hi Normal ctermfg=none ctermbg=none
+hi Normal ctermfg=none ctermbg=none 
 highlight clear LineNr
 
 "settings of indentLine

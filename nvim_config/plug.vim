@@ -8,12 +8,13 @@ Plug 'https://github.com/preservim/nerdtree' |
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 " telescope and it's dependences
-Plug 'https://github.com/BurntSushi/ripgrep'
-Plug 'https://github.com/sharkdp/fd'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+"Plug 'https://github.com/BurntSushi/ripgrep'
+"Plug 'https://github.com/sharkdp/fd'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
 
 " code writing
 Plug 'https://github.com/preservim/nerdcommenter'
@@ -22,6 +23,10 @@ Plug 'https://github.com/octol/vim-cpp-enhanced-highlight/'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'https://github.com/sbdchd/neoformat'
+Plug 'https://github.com/sbdchd/neoformat'
+
+" jedi
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 
 " copilot
 "Plug 'https://github.com/github/copilot.vim'

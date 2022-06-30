@@ -20,8 +20,8 @@ nnoremap <silent> <C-w>s :split<CR><C-w>j
 " close window
 nnoremap <C-q> :q<CR>
 " save file
-nnoremap <C-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
+nnoremap <C-s> :Neoformat<CR>:w<CR>
+imap <c-s> <Esc>:Neoformat<CR>:w<CR>a
 
 " fix jump list
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
@@ -31,10 +31,14 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" ctrl v is taken on linux for paste
+nmap <C-m> <C-v>
+
+
 " fix visual mode
 vmap $ g_
 
 " formatting code
-map <C-f> :pyf ~/Configurations/clang-format.py<cr>
+map <C-f> :pyf ~/dotfiles/clang-format.py<cr>
 
 
