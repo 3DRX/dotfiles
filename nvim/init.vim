@@ -11,7 +11,6 @@ runtime ./plugins/nerdtree.vim
 "runtime ./plugins/telescope.vim
 runtime ./plugins/NERDCommenter.vim
 runtime ./plugins/gitgutter.vim
-"runtime ./plugins/neoformat.vim
 "runtime ./colors/NeoSolarized.vim
 :lua require('init')
 

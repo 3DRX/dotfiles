@@ -1,12 +1,9 @@
 -- LSP settings
-
--- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- connect to server
-require'lspconfig'.pyright.setup{
-    capabilities = capabilities,
-    on_attach = function()
+require("nvim-lsp-installer").setup {}
+local lspconfig = require("lspconfig")
+local function on_attach(client, bufnr)
     vim.keymap.set("n","K",vim.lsp.buf.hover,{buffer=0})
     vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=0})
     vim.keymap.set("n","gt",vim.lsp.buf.type_definition,{buffer=0})
@@ -15,38 +12,38 @@ require'lspconfig'.pyright.setup{
     vim.keymap.set("n","<leader>df",vim.diagnostic.goto_next,{buffer=0})
     vim.keymap.set("n","<leader>dp",vim.diagnostic.goto_prev,{buffer=0})
     vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,{buffer=0})
-    end,
-}
+end
 
---require'lspconfig'.clangd.setup{
-    --capabilities = capabilities,
-    --on_attach = function()
-    --vim.keymap.set("n","K",vim.lsp.buf.hover,{buffer=0})
-    --vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=0})
-    --vim.keymap.set("n","gt",vim.lsp.buf.type_definition,{buffer=0})
-    --vim.keymap.set("n","gi",vim.lsp.buf.implementation,{buffer=0})
-    --vim.keymap.set("n","gr",vim.lsp.buf.references,{buffer=0})
-    --vim.keymap.set("n","<leader>df",vim.diagnostic.goto_next,{buffer=0})
-    --vim.keymap.set("n","<leader>dp",vim.diagnostic.goto_prev,{buffer=0})
-    --vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,{buffer=0})
-    --end,
---}
-
-require'lspconfig'.tsserver.setup{
+lspconfig.sumneko_lua.setup { 
     capabilities = capabilities,
-    on_attach = function()
-    vim.keymap.set("n","K",vim.lsp.buf.hover,{buffer=0})
-    vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=0})
-    vim.keymap.set("n","gt",vim.lsp.buf.type_definition,{buffer=0})
-    vim.keymap.set("n","gi",vim.lsp.buf.implementation,{buffer=0})
-    vim.keymap.set("n","gr",vim.lsp.buf.references,{buffer=0})
-    vim.keymap.set("n","<leader>df",vim.diagnostic.goto_next,{buffer=0})
-    vim.keymap.set("n","<leader>dp",vim.diagnostic.goto_prev,{buffer=0})
-    vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,{buffer=0})
-    end,
+    on_attach = on_attach
 }
 
--- clangd_extensions.nvim
+lspconfig.tsserver.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.html.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.pyright.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.jdtls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.cmake.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
 require("clangd_extensions").setup {
     server = {
         -- options to pass to nvim-lspconfig
@@ -128,12 +125,12 @@ require("clangd_extensions").setup {
             highlights = {
                 detail = "Comment",
             },
-        memory_usage = {
-            border = "none",
-        },
-        symbol_info = {
-            border = "none",
-        },
+            memory_usage = {
+                border = "none",
+            },
+            symbol_info = {
+                border = "none",
+            },
     },
 }
 }

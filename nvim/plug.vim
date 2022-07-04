@@ -12,9 +12,7 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 " code writing
 Plug 'https://github.com/preservim/nerdcommenter'
 Plug 'Yggdroot/indentLine'
-Plug 'https://github.com/octol/vim-cpp-enhanced-highlight/'
 Plug 'jiangmiao/auto-pairs'
-Plug 'https://github.com/sbdchd/neoformat'
 Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -23,6 +21,10 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'https://github.com/p00f/clangd_extensions.nvim'
+Plug 'williamboman/nvim-lsp-installer'
+Plug 'mfussenegger/nvim-jdtls'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'mfussenegger/nvim-jdtls'
 
 call plug#end()
 

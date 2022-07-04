@@ -24,8 +24,8 @@ nnoremap <silent> <C-w>s :split<CR><C-w>j
 nnoremap <C-q> :q<CR>
 
 " save file
-nnoremap <C-s> :lua vim.lsp.buf.format()<CR>:w<CR>
-imap <c-s> <Esc>:lua vim.lsp.buf.format()<CR>:w<CR>a
+nnoremap <C-s> :lua vim.lsp.buf.format()<CR>:wa<CR>
+imap <c-s> <Esc>:lua vim.lsp.buf.format()<CR>:wa<CR>a
 
 " fix jump list
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
