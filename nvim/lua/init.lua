@@ -4,17 +4,29 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 local function on_attach(client, bufnr)
-    vim.keymap.set("n","K",vim.lsp.buf.hover,{buffer=0})
-    vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=0})
-    vim.keymap.set("n","gt",vim.lsp.buf.type_definition,{buffer=0})
-    vim.keymap.set("n","gi",vim.lsp.buf.implementation,{buffer=0})
-    vim.keymap.set("n","gr",vim.lsp.buf.references,{buffer=0})
-    vim.keymap.set("n","<leader>df",vim.diagnostic.goto_next,{buffer=0})
-    vim.keymap.set("n","<leader>dp",vim.diagnostic.goto_prev,{buffer=0})
-    vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,{buffer=0})
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
+    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = 0 })
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0 })
+    vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, { buffer = 0 })
+    vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { buffer = 0 })
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
+    vim.keymap.set("n", "<C-f>", vim.lsp.buf.formatting, { buffer = 0 })
+    vim.cmd [[
+    highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+    highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+    highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+    highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+
+    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
+    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
+    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
+    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
+    ]]
 end
 
-lspconfig.sumneko_lua.setup { 
+lspconfig.sumneko_lua.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
@@ -48,28 +60,8 @@ require("clangd_extensions").setup {
     server = {
         -- options to pass to nvim-lspconfig
         -- i.e. the arguments to require("lspconfig").clangd.setup({})
-    capabilities = capabilities,
-    on_attach = function()
-    vim.keymap.set("n","K",vim.lsp.buf.hover,{buffer=0})
-    vim.keymap.set("n","gd",vim.lsp.buf.definition,{buffer=0})
-    vim.keymap.set("n","gt",vim.lsp.buf.type_definition,{buffer=0})
-    vim.keymap.set("n","gi",vim.lsp.buf.implementation,{buffer=0})
-    vim.keymap.set("n","gr",vim.lsp.buf.references,{buffer=0})
-    vim.keymap.set("n","<leader>df",vim.diagnostic.goto_next,{buffer=0})
-    vim.keymap.set("n","<leader>dp",vim.diagnostic.goto_prev,{buffer=0})
-    vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,{buffer=0})
-    vim.cmd [[
-    highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
-    highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
-    highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
-    highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
-
-    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
-    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
-    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
-    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
-    ]]
-    end,
+        capabilities = capabilities,
+        on_attach = on_attach
     },
     extensions = {
         -- defaults:
@@ -131,8 +123,8 @@ require("clangd_extensions").setup {
             symbol_info = {
                 border = "none",
             },
-    },
-}
+        },
+    }
 }
 ---------------------------------------------------------------------
 -- Setup nvim-cmp
@@ -143,19 +135,18 @@ vim.opt.completeopt = {
     "noselect"
 }
 
-local cmp = require'cmp'
+local cmp = require 'cmp'
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 local luasnip = require("luasnip")
-local cmp = require("cmp")
 
 cmp.setup({
     snippet = {
         expand = function(args)
-             require('luasnip').lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     window = {
@@ -189,6 +180,7 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'path' },
     }, {
         { name = 'buffer' },
     }),

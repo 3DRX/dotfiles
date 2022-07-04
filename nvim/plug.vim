@@ -22,9 +22,7 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'https://github.com/p00f/clangd_extensions.nvim'
 Plug 'williamboman/nvim-lsp-installer'
-Plug 'mfussenegger/nvim-jdtls'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'mfussenegger/nvim-jdtls'
 
 call plug#end()
 
