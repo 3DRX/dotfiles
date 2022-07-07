@@ -8,11 +8,11 @@ let mapleader=" "
 runtime ./plug.vim
 runtime ./keybinding.vim
 runtime ./plugins/nerdtree.vim
-"runtime ./plugins/telescope.vim
+runtime ./plugins/telescope.vim
 runtime ./plugins/NERDCommenter.vim
 runtime ./plugins/gitgutter.vim
 "runtime ./colors/NeoSolarized.vim
-:lua require('init')
+lua require('init')
 
 "------------------------------------------------------------------------------------
 

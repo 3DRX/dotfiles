@@ -9,6 +9,11 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'https://github.com/nvim-telescope/telescope.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " code writing
 Plug 'https://github.com/preservim/nerdcommenter'
 Plug 'Yggdroot/indentLine'
@@ -23,6 +28,8 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'https://github.com/p00f/clangd_extensions.nvim'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 

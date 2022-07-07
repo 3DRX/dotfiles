@@ -1,4 +1,5 @@
 -- LSP settings
+
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 require("nvim-lsp-installer").setup {}
@@ -25,6 +26,16 @@ local function on_attach(client, bufnr)
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
     ]]
 end
+
+lspconfig.cssls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+
+lspconfig.vimls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 
 lspconfig.sumneko_lua.setup {
     capabilities = capabilities,
@@ -61,7 +72,7 @@ require("clangd_extensions").setup {
         -- options to pass to nvim-lspconfig
         -- i.e. the arguments to require("lspconfig").clangd.setup({})
         capabilities = capabilities,
-        on_attach = on_attach
+        on_attach = on_attach,
     },
     extensions = {
         -- defaults:
@@ -142,6 +153,7 @@ local has_words_before = function()
 end
 
 local luasnip = require("luasnip")
+local cmp = require("cmp")
 
 cmp.setup({
     snippet = {
@@ -206,4 +218,75 @@ cmp.setup.filetype('gitcommit', {
         { name = 'buffer' },
     })
 })
+
+-- configurations of luasnip
+-- key map
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+    if ls.expand_or_jumpable() then
+        ls.expand_or_jump()
+    end
+end, { silent = true })
+
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+    if ls.jumpable(-1) then
+        ls.jump(-1)
+    end
+end, { silent = true })
+
+-- snippets
+local ls = require("luasnip")
+-- some shorthands...
+local snip = ls.snippet
+local node = ls.snippet_node
+local text = ls.text_node
+local insert = ls.insert_node
+local func = ls.function_node
+local choice = ls.choice_node
+local dynamicn = ls.dynamic_node
+
+require("luasnip.loaders.from_vscode").lazy_load()
+
+local date = function() return { os.date('%Y-%m-%d') } end
+
+ls.add_snippets(nil, {
+    all = {
+        snip({
+            trig = "date",
+            namr = "Date",
+            dscr = "Date in the form of YYYY-MM-DD",
+        }, {
+            func(date, {}),
+        }),
+        snip({
+            trig = "meta",
+            namr = "Metadata",
+            dscr = "Yaml metadata format for markdown"
+        },
+            {
+                text({ "---",
+                    "title: " }), insert(1, "note_title"), text({ "",
+                    "author: " }), insert(2, "author"), text({ "",
+                    "date: " }), func(date, {}), text({ "",
+                    "categories: [" }), insert(3, ""), text({ "]",
+                    "lastmod: " }), func(date, {}), text({ "",
+                    "tags: [" }), insert(4), text({ "]",
+                    "comments: true",
+                    "---", "" }),
+                insert(0)
+            }),
+    },
+})
+
+
+-- Telescope Settings
+
+require('telescope').setup {
+    defaults = {
+        prompt_prefix = "🔎  ",
+    },
+    pickers = {
+    },
+    extensions = {
+    }
+}
 
