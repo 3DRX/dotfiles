@@ -52,7 +52,12 @@ lspconfig.html.setup {
     on_attach = on_attach
 }
 
-lspconfig.pylsp.setup {
+-- lspconfig.pylsp.setup {
+--     capabilities = capabilities,
+--     on_attach = on_attach
+-- }
+--
+lspconfig.pyright.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
@@ -290,3 +295,217 @@ require('telescope').setup {
     }
 }
 
+
+-- comment.nvim settings
+
+require('Comment').setup {
+    ---Add a space b/w comment and the line
+    ---@type boolean|fun():boolean
+    padding = true,
+
+    ---Whether the cursor should stay at its position
+    ---NOTE: This only affects NORMAL mode mappings and doesn't work with dot-repeat
+    ---@type boolean
+    sticky = true,
+
+    ---Lines to be ignored while comment/uncomment.
+    ---Could be a regex string or a function that returns a regex string.
+    ---Example: Use '^$' to ignore empty lines
+    ---@type string|fun():string
+    ignore = nil,
+
+    ---LHS of toggle mappings in NORMAL + VISUAL mode
+    ---@type table
+    toggler = {
+        ---Line-comment toggle keymap
+        line = 'gcc',
+        ---Block-comment toggle keymap
+        block = 'gbc',
+    },
+
+    ---LHS of operator-pending mappings in NORMAL + VISUAL mode
+    ---@type table
+    opleader = {
+        ---Line-comment keymap
+        line = 'gc',
+        ---Block-comment keymap
+        block = 'gb',
+    },
+
+    ---LHS of extra mappings
+    ---@type table
+    extra = {
+        ---Add comment on the line above
+        above = 'gcO',
+        ---Add comment on the line below
+        below = 'gco',
+        ---Add comment at the end of line
+        eol = 'gcA',
+    },
+
+    ---Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
+    ---NOTE: If `mappings = false` then the plugin won't create any mappings
+    ---@type boolean|table
+    mappings = {
+        ---Operator-pending mapping
+        ---Includes `gcc`, `gbc`, `gc[count]{motion}` and `gb[count]{motion}`
+        ---NOTE: These mappings can be changed individually by `opleader` and `toggler` config
+        basic = true,
+        ---Extra mapping
+        ---Includes `gco`, `gcO`, `gcA`
+        extra = false,
+        ---Extended mapping
+        ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
+        extended = false,
+    },
+
+    ---Pre-hook, called before commenting the line
+    ---@type fun(ctx: CommentCtx):string
+    pre_hook = nil,
+
+    ---Post-hook, called after commenting is done
+    ---@type fun(ctx: CommentCtx)
+    post_hook = nil,
+}
+
+
+-- Treesitter settings
+
+require 'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all"
+    ensure_installed = "all",
+
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+
+    -- Automatically install missing parsers when entering buffer
+    auto_install = true,
+
+    -- List of parsers to ignore installing (for "all")
+    ignore_install = {},
+
+    highlight = {
+        -- `false` will disable the whole extension
+        enable = true,
+
+        -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+        -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+        -- the name of the parser)
+        -- list of language that will be disabled
+        disable = {},
+
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
+    },
+}
+
+
+-- nvim-dap config
+
+-- keymaps
+vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
+vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<CR>")
+vim.keymap.set("n", "<F8>", ":lua require'dap'.step_into()<CR>")
+vim.keymap.set("n", "<F7>", ":lua require'dap'.step_out()<CR>")
+vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
+------------------------
+
+local dap = require('dap')
+dap.adapters.lldb = {
+    type = 'executable',
+    command = '/usr/bin/lldb-vscode',
+    name = 'lldb'
+}
+dap.configurations.cpp = {
+    {
+        name = 'Launch',
+        type = 'lldb',
+        request = 'launch',
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = true,
+        args = {},
+        env = function()
+            local variables = {}
+            for k, v in pairs(vim.fn.environ()) do
+                table.insert(variables, string.format("%s=%s", k, v))
+            end
+            return variables
+        end,
+        -- 💀
+        -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+        --
+        --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+        --
+        -- Otherwise you might get the following error:
+        --
+        --    Error on launch: Failed to attach to the target process
+        --
+        -- But you should be aware of the implications:
+        -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+        -- runInTerminal = false,
+    },
+}
+dap.configurations.c = dap.configurations.cpp
+dap.configurations.rust = dap.configurations.cpp
+
+require("dapui").setup({
+    icons = { expanded = "▾", collapsed = "▸" },
+    mappings = {
+        -- Use a table to apply multiple mappings
+        expand = { "<CR>", "<2-LeftMouse>" },
+        open = "o",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+        toggle = "t",
+    },
+    -- Expand lines larger than the window
+    -- Requires >= 0.7
+    expand_lines = vim.fn.has("nvim-0.7"),
+    -- Layouts define sections of the screen to place windows.
+    -- The position can be "left", "right", "top" or "bottom".
+    -- The size specifies the height/width depending on position. It can be an Int
+    -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
+    -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
+    -- Elements are the elements shown in the layout (in order).
+    -- Layouts are opened in order so that earlier layouts take priority in window sizing.
+    layouts = {
+        {
+            elements = {
+                -- Elements can be strings or table with id and size keys.
+                { id = "scopes", size = 0.25 },
+                "breakpoints",
+                "stacks",
+                "watches",
+            },
+            size = 40, -- 40 columns
+            position = "left",
+        },
+        {
+            elements = {
+                "repl",
+                "console",
+            },
+            size = 0.25, -- 25% of total lines
+            position = "bottom",
+        },
+    },
+    floating = {
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
+        border = "single", -- Border style. Can be "single", "double" or "rounded"
+        mappings = {
+            close = { "q", "<Esc>" },
+        },
+    },
+    windows = { indent = 1 },
+    render = {
+        max_type_length = nil, -- Can be integer or nil.
+    }
+})

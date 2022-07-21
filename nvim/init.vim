@@ -9,7 +9,6 @@ runtime ./plug.vim
 runtime ./keybinding.vim
 runtime ./plugins/nerdtree.vim
 runtime ./plugins/telescope.vim
-runtime ./plugins/NERDCommenter.vim
 runtime ./plugins/gitgutter.vim
 "runtime ./colors/NeoSolarized.vim
 lua require('init')
@@ -23,7 +22,6 @@ filetype indent on
 filetype plugin on
 set tabstop=4
 set expandtab
-%retab
 set shiftwidth=4
 set softtabstop=4
 set scrolloff=200

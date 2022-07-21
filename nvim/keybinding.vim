@@ -1,6 +1,6 @@
 " key bindings
 
-" fix window switching
+" window switching
 nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
@@ -34,10 +34,6 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 " line moving dark-art
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-
-" ctrl v is taken on linux for paste
-nmap <C-m> <C-v>
-
 
 " fix visual mode
 vmap $ g_

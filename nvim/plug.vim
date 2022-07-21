@@ -13,9 +13,13 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'nvim-telescope/telescope-dap.nvim'
 
 " code writing
-Plug 'https://github.com/preservim/nerdcommenter'
 Plug 'Yggdroot/indentLine'
 Plug 'jiangmiao/auto-pairs'
 Plug 'https://github.com/neovim/nvim-lspconfig'
@@ -28,8 +32,7 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'https://github.com/p00f/clangd_extensions.nvim'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'rafamadriz/friendly-snippets'
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'numToStr/Comment.nvim'
 
 call plug#end()
 
