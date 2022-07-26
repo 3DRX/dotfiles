@@ -56,7 +56,7 @@ lspconfig.html.setup {
 --     capabilities = capabilities,
 --     on_attach = on_attach
 -- }
---
+
 lspconfig.pyright.setup {
     capabilities = capabilities,
     on_attach = on_attach
@@ -106,11 +106,11 @@ require("clangd_extensions").setup {
             -- whether to align to the extreme right or not
             right_align = true,
             -- padding from the right if right_align is true
-            right_align_padding = 30,
+            right_align_padding = 0,
             -- The color of the hints
             highlight = "Comment",
             -- The highlight group priority for extmark
-            priority = 100,
+            priority = 0,
         },
         ast = {
             role_icons = {
@@ -151,7 +151,6 @@ vim.opt.completeopt = {
     "noselect"
 }
 
-local cmp = require 'cmp'
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -509,3 +508,36 @@ require("dapui").setup({
         max_type_length = nil, -- Can be integer or nil.
     }
 })
+
+-- lualine config
+
+require('lualine').setup {
+    options = {
+        icons_enabled = true,
+        theme = 'auto',
+        -- component_separators = { left = '', right = '' },
+        component_separators = { left = '|', right = '|' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {},
+        always_divide_middle = true,
+        globalstatus = false,
+    },
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    extensions = {}
+}

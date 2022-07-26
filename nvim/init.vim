@@ -38,13 +38,10 @@ set nowritebackup
 set updatetime=300
 set undodir=~/.vim/undodir
 set undofile
+set guifont=DejaVuSansMono\ Nerd\ Font:h20
 "encoding
 set encoding=UTF-8
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
-
-"neovide
-set guifont=DejaVuSansMono\ Nerd\ Font:h20
-let g:neovide_transparency=0.6
 
 " colorscheme
 let g:airline_theme='papercolor'

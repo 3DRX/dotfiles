@@ -1,10 +1,12 @@
 call plug#begin()
 
 " UI
-Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'https://github.com/vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/preservim/nerdtree' |
             \ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
