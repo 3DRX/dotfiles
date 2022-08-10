@@ -5,14 +5,14 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 local function on_attach(client, bufnr)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
-    vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = 0 })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0 })
-    vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, { buffer = 0 })
-    vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { buffer = 0 })
-    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
+    -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+    -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
+    -- vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
+    -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = 0 })
+    -- vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0 })
+    -- vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, { buffer = 0 })
+    -- vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { buffer = 0 })
+    -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
     vim.keymap.set("n", "<C-f>", vim.lsp.buf.formatting, { buffer = 0 })
     vim.cmd [[
     highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
@@ -294,6 +294,32 @@ require('telescope').setup {
     }
 }
 
+-- require("telescope").setup {
+--     extensions = {
+--         file_browser = {
+--             theme = "ivy",
+--             -- disables netrw and use telescope-file-browser in its place
+--             hijack_netrw = true,
+--             mappings = {
+--                 ["i"] = {
+--                     -- your custom insert mode mappings
+--                 },
+--                 ["n"] = {
+--                     -- your custom normal mode mappings
+--                 },
+--             },
+--         },
+--     },
+-- }
+-- require("telescope").load_extension "file_browser"
+--
+-- vim.api.nvim_set_keymap(
+--     "n",
+--     "<C-b>",
+--     ":Telescope file_browser<cr>",
+--     { noremap = true, silent = true }
+-- )
+
 
 -- comment.nvim settings
 
@@ -516,7 +542,7 @@ require('lualine').setup {
         icons_enabled = true,
         theme = 'auto',
         -- component_separators = { left = '', right = '' },
-        component_separators = { left = '|', right = '|' },
+        component_separators = { left = '/', right = '\\' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {},
         always_divide_middle = true,
@@ -525,15 +551,23 @@ require('lualine').setup {
     sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_c = { {
+            'filename',
+            file_status = true,
+            path = 1
+        } },
+        lualine_x = { 'encoding', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
     },
     inactive_sections = {
-        lualine_a = {},
+        lualine_a = { 'diagnostics' },
         lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = { {
+            'filename',
+            file_status = true,
+            path = 1
+        } },
         lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {}
@@ -541,3 +575,115 @@ require('lualine').setup {
     tabline = {},
     extensions = {}
 }
+
+-- Lspsaga
+local status, saga = pcall(require, 'lspsaga')
+if (not status) then
+    return
+end
+
+saga.init_lsp_saga {
+    -- "single" | "double" | "rounded" | "bold" | "plus"
+    border_style = "rounded",
+    --the range of 0 for fully opaque window (disabled) to 100 for fully
+    --transparent background. Values between 0-30 are typically most useful.
+    saga_winblend = 0,
+    -- when cursor in saga window you config these to move
+    move_in_saga = { prev = '<C-p>', next = '<C-n>' },
+    -- Error, Warn, Info, Hint
+    -- use emoji like
+    -- { "🙀", "😿", "😾", "😺" }
+    -- or
+    -- { "😡", "😥", "😤", "😐" }
+    -- and diagnostic_header can be a function type
+    -- must return a string and when diagnostic_header
+    -- is function type it will have a param `entry`
+    -- entry is a table type has these filed
+    -- { bufnr, code, col, end_col, end_lnum, lnum, message, severity, source }
+    diagnostic_header = { " ", " ", " ", "ﴞ " },
+    -- show diagnostic source
+    show_diagnostic_source = true,
+    -- add bracket or something with diagnostic source, just have 2 elements
+    diagnostic_source_bracket = {},
+    -- preview lines of lsp_finder and definition preview
+    max_preview_lines = 15,
+    -- use emoji lightbulb in default
+    code_action_icon = "💡",
+    -- if true can press number to execute the codeaction in codeaction window
+    code_action_num_shortcut = true,
+    -- same as nvim-lightbulb but async
+    code_action_lightbulb = {
+        enable = true,
+        sign = true,
+        enable_in_insert = true,
+        sign_priority = 20,
+        virtual_text = true,
+    },
+    -- finder icons
+    finder_icons = {
+        def = '  ',
+        ref = '🔭 ',
+        link = '  ',
+    },
+    -- finder do lsp request timeout
+    -- if your project big enough or your server very slow
+    -- you may need to increase this value
+    finder_request_timeout = 1500,
+    finder_action_keys = {
+        open = "<cr>",
+        vsplit = "s",
+        split = "i",
+        tabe = "t",
+        quit = "q",
+        -- scroll_down = "<Shift><up>",
+        -- scroll_up = "<Shift><down>", -- quit can be a table
+    },
+    code_action_keys = {
+        quit = "q",
+        exec = "<CR>",
+    },
+    rename_action_quit = "<C-q>",
+    rename_in_select = true,
+    definition_preview_icon = "  ",
+    -- show symbols in winbar must nightly
+    symbol_in_winbar = {
+        in_custom = false,
+        enable = false,
+        separator = ' ',
+        show_file = true,
+        click_support = false,
+    },
+    -- show outline
+    show_outline = {
+        win_position = 'right',
+        --set special filetype win that outline window split.like NvimTree neotree
+        -- defx, db_ui
+        win_with = '',
+        win_width = 30,
+        auto_enter = true,
+        auto_preview = true,
+        virt_text = '┃',
+        jump_key = 'o',
+        -- auto refresh when change buffer
+        auto_refresh = true,
+    },
+    -- if you don't use nvim-lspconfig you must pass your server name and
+    -- the related filetypes into this table
+    -- like server_filetype_map = { metals = { "sbt", "scala" } }
+    server_filetype_map = {},
+}
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<leader>df', '<Cmd>Lspsaga diagnostic_jump_next<cr>', opts)
+vim.keymap.set('n', '<leader>dp', '<Cmd>Lspsaga diagnostic_jump_prev<cr>', opts)
+vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<cr>', opts)
+vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<cr>', opts)
+vim.keymap.set('n', '<leader>rn', '<Cmd>Lspsaga rename<cr>', opts)
+vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
+vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
+
+-- nvim-colorizer
+-- require 'colorizer'.setup {
+--   '*'; -- Highlight all files, but customize some others.
+-- }
+-- for some reason colorizer cause a problem when starting nvim

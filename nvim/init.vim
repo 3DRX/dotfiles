@@ -10,7 +10,6 @@ runtime ./keybinding.vim
 runtime ./plugins/nerdtree.vim
 runtime ./plugins/telescope.vim
 runtime ./plugins/gitgutter.vim
-"runtime ./colors/NeoSolarized.vim
 lua require('init')
 
 "------------------------------------------------------------------------------------
