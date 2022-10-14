@@ -10,7 +10,7 @@ runtime ./keybinding.vim
 runtime ./plugins/nerdtree.vim
 runtime ./plugins/telescope.vim
 runtime ./plugins/gitgutter.vim
-lua require('init')
+lua require("init")
 
 "------------------------------------------------------------------------------------
 
@@ -52,16 +52,12 @@ if exists("&termguicolors") && exists("&winblend")
     set pumblend=5
     set background=dark
     "" Use NeoSolarized
-    "let g:neosolarized_termtrans=1
-    "let g:neosolarized_contrast="high"
-    "runtime ./colors/NeoSolarized.vim
-    "colorscheme NeoSolarized
+    " let g:neosolarized_termtrans=1
+    " let g:neosolarized_contrast="high"
+    " runtime ./colors/NeoSolarized.vim
+    " colorscheme NeoSolarized
     "" Use TokyoNight
-    let g:tokyonight_transparent=1
-    let g:tokyonight_colors = {
-                \ 'comment' : 'red',
-                \ }
-    colorscheme tokyonight
+    colorscheme tokyonight-night
 endif
 hi Normal ctermfg=none ctermbg=none 
 highlight clear LineNr

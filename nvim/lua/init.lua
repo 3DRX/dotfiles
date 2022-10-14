@@ -398,16 +398,20 @@ require('Comment').setup {
 
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-    ensure_installed = "all",
+    ensure_installed = {},
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
 
     -- Automatically install missing parsers when entering buffer
+    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
     auto_install = true,
 
     -- List of parsers to ignore installing (for "all")
     ignore_install = {},
+
+    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
     highlight = {
         -- `false` will disable the whole extension
@@ -426,7 +430,6 @@ require 'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = false,
     },
 }
-
 
 -- nvim-dap config
 
@@ -540,7 +543,7 @@ require("dapui").setup({
 require('lualine').setup {
     options = {
         icons_enabled = true,
-        theme = 'auto',
+        theme = 'tokyonight',
         -- component_separators = { left = '', right = '' },
         component_separators = { left = '/', right = '\\' },
         section_separators = { left = '', right = '' },
@@ -583,6 +586,111 @@ if (not status) then
 end
 
 saga.init_lsp_saga {
+    -- Options with default value
+    -- "single" | "double" | "rounded" | "bold" | "plus"
+    border_style = "rounded",
+    --the range of 0 for fully opaque window (disabled) to 100 for fully
+    --transparent background. Values between 0-30 are typically most useful.
+    saga_winblend = 0,
+    -- when cursor in saga window you config these to move
+    move_in_saga = { prev = '<C-p>', next = '<C-n>' },
+    -- Error, Warn, Info, Hint
+    -- use emoji like
+    -- { "🙀", "😿", "😾", "😺" }
+    -- or
+    -- { "😡", "😥", "😤", "😐" }
+    -- and diagnostic_header can be a function type
+    -- must return a string and when diagnostic_header
+    -- is function type it will have a param `entry`
+    -- entry is a table type has these filed
+    -- { bufnr, code, col, end_col, end_lnum, lnum, message, severity, source }
+    diagnostic_header = { " ", " ", " ", "ﴞ " },
+    -- preview lines of lsp_finder and definition preview
+    max_preview_lines = 10,
+    -- use emoji lightbulb in default
+    code_action_icon = "💡",
+    -- if true can press number to execute the codeaction in codeaction window
+    code_action_num_shortcut = true,
+    -- same as nvim-lightbulb but async
+    code_action_lightbulb = {
+        enable = true,
+        enable_in_insert = true,
+        cache_code_action = true,
+        sign = true,
+        update_time = 150,
+        sign_priority = 20,
+        virtual_text = true,
+    },
+    -- finder icons
+    finder_icons = {
+        def = '  ',
+        ref = '🔭 ',
+        link = '  ',
+    },
+    -- finder do lsp request timeout
+    -- if your project big enough or your server very slow
+    -- you may need to increase this value
+    finder_request_timeout = 1500,
+    finder_action_keys = {
+        open = "<CR>",
+        vsplit = "s",
+        split = "i",
+        tabe = "t",
+        quit = "q",
+    },
+    code_action_keys = {
+        quit = "q",
+        exec = "<CR>",
+    },
+    definition_action_keys = {
+        edit = '<C-c>o',
+        vsplit = '<C-c>v',
+        split = '<C-c>i',
+        tabe = '<C-c>t',
+        quit = 'q',
+    },
+    rename_action_quit = "<C-c>",
+    rename_in_select = true,
+    -- show symbols in winbar must nightly
+    -- in_custom mean use lspsaga api to get symbols
+    -- and set it to your custom winbar or some winbar plugins.
+    -- if in_cusomt = true you must set in_enable to false
+    symbol_in_winbar = {
+        in_custom = false,
+        enable = true,
+        separator = ' ',
+        show_file = true,
+        -- define how to customize filename, eg: %:., %
+        -- if not set, use default value `%:t`
+        -- more information see `vim.fn.expand` or `expand`
+        -- ## only valid after set `show_file = true`
+        file_formatter = "",
+        click_support = false,
+    },
+    -- show outline
+    show_outline = {
+        win_position = 'right',
+        --set special filetype win that outline window split.like NvimTree neotree
+        -- defx, db_ui
+        win_with = '',
+        win_width = 30,
+        auto_enter = true,
+        auto_preview = true,
+        virt_text = '┃',
+        jump_key = 'o',
+        -- auto refresh when change buffer
+        auto_refresh = true,
+    },
+    -- custom lsp kind
+    -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
+    custom_kind = {},
+    -- if you don't use nvim-lspconfig you must pass your server name and
+    -- the related filetypes into this table
+    -- like server_filetype_map = { metals = { "sbt", "scala" } }
+    server_filetype_map = {},
+}
+
+--[[ saga.init_lsp_saga {
     -- "single" | "double" | "rounded" | "bold" | "plus"
     border_style = "rounded",
     --the range of 0 for fully opaque window (disabled) to 100 for fully
@@ -671,7 +779,7 @@ saga.init_lsp_saga {
     -- the related filetypes into this table
     -- like server_filetype_map = { metals = { "sbt", "scala" } }
     server_filetype_map = {},
-}
+} ]]
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', '<Cmd>Lspsaga diagnostic_jump_next<cr>', opts)
@@ -682,8 +790,49 @@ vim.keymap.set('n', '<leader>rn', '<Cmd>Lspsaga rename<cr>', opts)
 vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
 
+--[[ vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)
+vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)
+vim.keymap.set('n', '<leader>rn', ':lua vim.lsp.buf.rename()<cr>', opts) ]]
+
 -- nvim-colorizer
 -- require 'colorizer'.setup {
 --   '*'; -- Highlight all files, but customize some others.
 -- }
 -- for some reason colorizer cause a problem when starting nvim
+
+
+-- tokyonight config
+require("tokyonight").setup({
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    style = "storm", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+    transparent = true, -- Enable this to disable setting the background color
+    terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+    styles = {
+        -- Style to be applied to different syntax groups
+        -- Value is any valid attr-list value for `:help nvim_set_hl`
+        comments = { italic = true },
+        keywords = { italic = true },
+        functions = {},
+        variables = {},
+        -- Background styles. Can be "dark", "transparent" or "normal"
+        sidebars = "dark", -- style for sidebars, see below
+        floats = "dark", -- style for floating windows
+    },
+    sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+    day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+    hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+    dim_inactive = false, -- dims inactive windows
+    lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+
+    --- You can override specific color groups to use other groups or a hex color
+    --- function will be called with a ColorScheme table
+    ---@param colors ColorScheme
+    on_colors = function(colors) end,
+
+    --- You can override specific highlights to use other groups or a hex color
+    --- function will be called with a Highlights and ColorScheme table
+    ---@param highlights Highlights
+    ---@param colors ColorScheme
+    on_highlights = function(highlights, colors) end,
+})
