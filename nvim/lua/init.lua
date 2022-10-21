@@ -13,7 +13,7 @@ local function on_attach(client, bufnr)
     -- vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, { buffer = 0 })
     -- vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { buffer = 0 })
     -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
-    vim.keymap.set("n", "<C-f>", vim.lsp.buf.formatting, { buffer = 0 })
+    vim.keymap.set("n", "<C-f>", vim.lsp.buf.format, { buffer = 0 })
     vim.cmd [[
     highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
     highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
