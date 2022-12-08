@@ -1,18 +1,8 @@
--- LSP settings
-
+-- LSP
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 local function on_attach(client, bufnr)
-    -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-    -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
-    -- vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = 0 })
-    -- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = 0 })
-    -- vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = 0 })
-    -- vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, { buffer = 0 })
-    -- vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { buffer = 0 })
-    -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = 0 })
     vim.keymap.set("n", "<C-f>", vim.lsp.buf.format, { buffer = 0 })
     vim.cmd [[
     highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
@@ -31,58 +21,47 @@ lspconfig.cssls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.vimls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.sumneko_lua.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.tsserver.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.html.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 -- lspconfig.pylsp.setup {
 --     capabilities = capabilities,
 --     on_attach = on_attach
 -- }
-
 lspconfig.pyright.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.jdtls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 lspconfig.cmake.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
 require("clangd_extensions").setup {
     server = {
-        -- options to pass to nvim-lspconfig
-        -- i.e. the arguments to require("lspconfig").clangd.setup({})
         capabilities = capabilities,
         on_attach = on_attach,
     },
     extensions = {
         -- defaults:
         -- Automatically set inlay hints (type hints)
-        autoSetHints = true,
+        autoSetHints = false,
         -- These apply to the default ClangdSetInlayHints command
         inlay_hints = {
             -- Only show inlay hints for the current line
@@ -142,23 +121,19 @@ require("clangd_extensions").setup {
         },
     }
 }
----------------------------------------------------------------------
--- Setup nvim-cmp
 
+-- nvim-cmp
 vim.opt.completeopt = {
     "menu",
     "menuone",
     "noselect"
 }
-
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
 local luasnip = require("luasnip")
 local cmp = require("cmp")
-
 cmp.setup({
     snippet = {
         expand = function(args)
@@ -213,7 +188,6 @@ cmp.setup({
         },
     },
 })
-
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
@@ -223,7 +197,7 @@ cmp.setup.filetype('gitcommit', {
     })
 })
 
--- configurations of luasnip
+-- Luasnip
 -- key map
 vim.keymap.set({ "i", "s" }, "<Tab>", function()
     if ls.expand_or_jumpable() then
@@ -236,22 +210,14 @@ vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
         ls.jump(-1)
     end
 end, { silent = true })
-
 -- snippets
 local ls = require("luasnip")
--- some shorthands...
 local snip = ls.snippet
-local node = ls.snippet_node
 local text = ls.text_node
 local insert = ls.insert_node
 local func = ls.function_node
-local choice = ls.choice_node
-local dynamicn = ls.dynamic_node
-
 require("luasnip.loaders.from_vscode").lazy_load()
-
 local date = function() return { os.date('%Y-%m-%d') } end
-
 ls.add_snippets(nil, {
     all = {
         snip({
@@ -281,64 +247,20 @@ ls.add_snippets(nil, {
     },
 })
 
-
--- Telescope Settings
-
-require('telescope').setup {
-    defaults = {
-        prompt_prefix = "🔎  ",
-    },
-    pickers = {
-    },
-    extensions = {
-    }
-}
-
--- require("telescope").setup {
---     extensions = {
---         file_browser = {
---             theme = "ivy",
---             -- disables netrw and use telescope-file-browser in its place
---             hijack_netrw = true,
---             mappings = {
---                 ["i"] = {
---                     -- your custom insert mode mappings
---                 },
---                 ["n"] = {
---                     -- your custom normal mode mappings
---                 },
---             },
---         },
---     },
--- }
--- require("telescope").load_extension "file_browser"
---
--- vim.api.nvim_set_keymap(
---     "n",
---     "<C-b>",
---     ":Telescope file_browser<cr>",
---     { noremap = true, silent = true }
--- )
-
-
--- comment.nvim settings
-
+-- comment.nvim
 require('Comment').setup {
     ---Add a space b/w comment and the line
     ---@type boolean|fun():boolean
     padding = true,
-
     ---Whether the cursor should stay at its position
     ---NOTE: This only affects NORMAL mode mappings and doesn't work with dot-repeat
     ---@type boolean
     sticky = true,
-
     ---Lines to be ignored while comment/uncomment.
     ---Could be a regex string or a function that returns a regex string.
     ---Example: Use '^$' to ignore empty lines
     ---@type string|fun():string
-    ignore = nil,
-
+    ignore = '^$',
     ---LHS of toggle mappings in NORMAL + VISUAL mode
     ---@type table
     toggler = {
@@ -347,7 +269,6 @@ require('Comment').setup {
         ---Block-comment toggle keymap
         block = 'gbc',
     },
-
     ---LHS of operator-pending mappings in NORMAL + VISUAL mode
     ---@type table
     opleader = {
@@ -356,7 +277,6 @@ require('Comment').setup {
         ---Block-comment keymap
         block = 'gb',
     },
-
     ---LHS of extra mappings
     ---@type table
     extra = {
@@ -367,7 +287,6 @@ require('Comment').setup {
         ---Add comment at the end of line
         eol = 'gcA',
     },
-
     ---Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
     ---NOTE: If `mappings = false` then the plugin won't create any mappings
     ---@type boolean|table
@@ -383,46 +302,35 @@ require('Comment').setup {
         ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
         extended = false,
     },
-
     ---Pre-hook, called before commenting the line
     ---@type fun(ctx: CommentCtx):string
     pre_hook = nil,
-
     ---Post-hook, called after commenting is done
     ---@type fun(ctx: CommentCtx)
     post_hook = nil,
 }
 
-
--- Treesitter settings
-
+-- Treesitter
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
     ensure_installed = {},
-
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
-
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
     auto_install = true,
-
     -- List of parsers to ignore installing (for "all")
     ignore_install = {},
-
     ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
     -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
     highlight = {
         -- `false` will disable the whole extension
         enable = true,
-
         -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
         -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
         -- the name of the parser)
         -- list of language that will be disabled
         disable = {},
-
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -431,121 +339,12 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 
--- nvim-dap config
-
--- keymaps
-vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
-vim.keymap.set("n", "<F9>", ":lua require'dap'.step_over()<CR>")
-vim.keymap.set("n", "<F8>", ":lua require'dap'.step_into()<CR>")
-vim.keymap.set("n", "<F7>", ":lua require'dap'.step_out()<CR>")
-vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
-------------------------
-
-local dap = require('dap')
-dap.adapters.lldb = {
-    type = 'executable',
-    command = '/usr/bin/lldb-vscode',
-    name = 'lldb'
-}
-dap.configurations.cpp = {
-    {
-        name = 'Launch',
-        type = 'lldb',
-        request = 'launch',
-        program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = true,
-        args = {},
-        env = function()
-            local variables = {}
-            for k, v in pairs(vim.fn.environ()) do
-                table.insert(variables, string.format("%s=%s", k, v))
-            end
-            return variables
-        end,
-        -- 💀
-        -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-        --
-        --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-        --
-        -- Otherwise you might get the following error:
-        --
-        --    Error on launch: Failed to attach to the target process
-        --
-        -- But you should be aware of the implications:
-        -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-        -- runInTerminal = false,
-    },
-}
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
-
-require("dapui").setup({
-    icons = { expanded = "▾", collapsed = "▸" },
-    mappings = {
-        -- Use a table to apply multiple mappings
-        expand = { "<CR>", "<2-LeftMouse>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
-    },
-    -- Expand lines larger than the window
-    -- Requires >= 0.7
-    expand_lines = vim.fn.has("nvim-0.7"),
-    -- Layouts define sections of the screen to place windows.
-    -- The position can be "left", "right", "top" or "bottom".
-    -- The size specifies the height/width depending on position. It can be an Int
-    -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
-    -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
-    -- Elements are the elements shown in the layout (in order).
-    -- Layouts are opened in order so that earlier layouts take priority in window sizing.
-    layouts = {
-        {
-            elements = {
-                -- Elements can be strings or table with id and size keys.
-                { id = "scopes", size = 0.25 },
-                "breakpoints",
-                "stacks",
-                "watches",
-            },
-            size = 40, -- 40 columns
-            position = "left",
-        },
-        {
-            elements = {
-                "repl",
-                "console",
-            },
-            size = 0.25, -- 25% of total lines
-            position = "bottom",
-        },
-    },
-    floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "single", -- Border style. Can be "single", "double" or "rounded"
-        mappings = {
-            close = { "q", "<Esc>" },
-        },
-    },
-    windows = { indent = 1 },
-    render = {
-        max_type_length = nil, -- Can be integer or nil.
-    }
-})
-
 -- lualine config
-
 require('lualine').setup {
     options = {
         icons_enabled = true,
         theme = 'tokyonight',
-        -- component_separators = { left = '', right = '' },
-        component_separators = { left = '/', right = '\\' },
+        component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {},
         always_divide_middle = true,
@@ -580,11 +379,7 @@ require('lualine').setup {
 }
 
 -- Lspsaga
-local status, saga = pcall(require, 'lspsaga')
-if (not status) then
-    return
-end
-
+local saga = require('lspsaga')
 saga.init_lsp_saga {
     -- Options with default value
     -- "single" | "double" | "rounded" | "bold" | "plus"
@@ -613,8 +408,8 @@ saga.init_lsp_saga {
     code_action_num_shortcut = true,
     -- same as nvim-lightbulb but async
     code_action_lightbulb = {
-        enable = true,
-        enable_in_insert = true,
+        enable = false,
+        enable_in_insert = false,
         cache_code_action = true,
         sign = true,
         update_time = 150,
@@ -630,7 +425,7 @@ saga.init_lsp_saga {
     -- finder do lsp request timeout
     -- if your project big enough or your server very slow
     -- you may need to increase this value
-    finder_request_timeout = 1500,
+    finder_request_timeout = 3000,
     finder_action_keys = {
         open = "<CR>",
         vsplit = "s",
@@ -690,97 +485,6 @@ saga.init_lsp_saga {
     server_filetype_map = {},
 }
 
---[[ saga.init_lsp_saga {
-    -- "single" | "double" | "rounded" | "bold" | "plus"
-    border_style = "rounded",
-    --the range of 0 for fully opaque window (disabled) to 100 for fully
-    --transparent background. Values between 0-30 are typically most useful.
-    saga_winblend = 0,
-    -- when cursor in saga window you config these to move
-    move_in_saga = { prev = '<C-p>', next = '<C-n>' },
-    -- Error, Warn, Info, Hint
-    -- use emoji like
-    -- { "🙀", "😿", "😾", "😺" }
-    -- or
-    -- { "😡", "😥", "😤", "😐" }
-    -- and diagnostic_header can be a function type
-    -- must return a string and when diagnostic_header
-    -- is function type it will have a param `entry`
-    -- entry is a table type has these filed
-    -- { bufnr, code, col, end_col, end_lnum, lnum, message, severity, source }
-    diagnostic_header = { " ", " ", " ", "ﴞ " },
-    -- show diagnostic source
-    show_diagnostic_source = true,
-    -- add bracket or something with diagnostic source, just have 2 elements
-    diagnostic_source_bracket = {},
-    -- preview lines of lsp_finder and definition preview
-    max_preview_lines = 15,
-    -- use emoji lightbulb in default
-    code_action_icon = "💡",
-    -- if true can press number to execute the codeaction in codeaction window
-    code_action_num_shortcut = true,
-    -- same as nvim-lightbulb but async
-    code_action_lightbulb = {
-        enable = true,
-        sign = true,
-        enable_in_insert = true,
-        sign_priority = 20,
-        virtual_text = true,
-    },
-    -- finder icons
-    finder_icons = {
-        def = '  ',
-        ref = '🔭 ',
-        link = '  ',
-    },
-    -- finder do lsp request timeout
-    -- if your project big enough or your server very slow
-    -- you may need to increase this value
-    finder_request_timeout = 1500,
-    finder_action_keys = {
-        open = "<cr>",
-        vsplit = "s",
-        split = "i",
-        tabe = "t",
-        quit = "q",
-        -- scroll_down = "<Shift><up>",
-        -- scroll_up = "<Shift><down>", -- quit can be a table
-    },
-    code_action_keys = {
-        quit = "q",
-        exec = "<CR>",
-    },
-    rename_action_quit = "<C-q>",
-    rename_in_select = true,
-    definition_preview_icon = "  ",
-    -- show symbols in winbar must nightly
-    symbol_in_winbar = {
-        in_custom = false,
-        enable = false,
-        separator = ' ',
-        show_file = true,
-        click_support = false,
-    },
-    -- show outline
-    show_outline = {
-        win_position = 'right',
-        --set special filetype win that outline window split.like NvimTree neotree
-        -- defx, db_ui
-        win_with = '',
-        win_width = 30,
-        auto_enter = true,
-        auto_preview = true,
-        virt_text = '┃',
-        jump_key = 'o',
-        -- auto refresh when change buffer
-        auto_refresh = true,
-    },
-    -- if you don't use nvim-lspconfig you must pass your server name and
-    -- the related filetypes into this table
-    -- like server_filetype_map = { metals = { "sbt", "scala" } }
-    server_filetype_map = {},
-} ]]
-
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', '<Cmd>Lspsaga diagnostic_jump_next<cr>', opts)
 vim.keymap.set('n', '<leader>dp', '<Cmd>Lspsaga diagnostic_jump_prev<cr>', opts)
@@ -790,49 +494,15 @@ vim.keymap.set('n', '<leader>rn', '<Cmd>Lspsaga rename<cr>', opts)
 vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
 
---[[ vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)
-vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)
-vim.keymap.set('n', '<leader>rn', ':lua vim.lsp.buf.rename()<cr>', opts) ]]
-
--- nvim-colorizer
--- require 'colorizer'.setup {
---   '*'; -- Highlight all files, but customize some others.
--- }
--- for some reason colorizer cause a problem when starting nvim
-
-
--- tokyonight config
+-- Color scheme tokyonight
 require("tokyonight").setup({
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    style = "storm", -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
-    transparent = true, -- Enable this to disable setting the background color
-    terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+    style = "night",
     styles = {
-        -- Style to be applied to different syntax groups
-        -- Value is any valid attr-list value for `:help nvim_set_hl`
-        comments = { italic = true },
-        keywords = { italic = true },
-        functions = {},
-        variables = {},
-        -- Background styles. Can be "dark", "transparent" or "normal"
-        sidebars = "dark", -- style for sidebars, see below
-        floats = "dark", -- style for floating windows
+        functions = {}
     },
-    sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-    day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
-    hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-    dim_inactive = false, -- dims inactive windows
-    lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
-
-    --- You can override specific color groups to use other groups or a hex color
-    --- function will be called with a ColorScheme table
-    ---@param colors ColorScheme
-    on_colors = function(colors) end,
-
-    --- You can override specific highlights to use other groups or a hex color
-    --- function will be called with a Highlights and ColorScheme table
-    ---@param highlights Highlights
-    ---@param colors ColorScheme
-    on_highlights = function(highlights, colors) end,
+    sidebars = { "qf", "vista_kind", "terminal", "packer" },
+    on_colors = function(colors)
+        colors.comment = "#895656"
+        colors.bg_visual = "#2a324f"
+    end
 })

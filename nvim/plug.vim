@@ -1,8 +1,6 @@
 call plug#begin()
 
 " UI
-" Plug 'https://github.com/vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/preservim/nerdtree' |
             \ Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'nvim-lualine/lualine.nvim'
@@ -12,16 +10,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 Plug 'nvim-lua/plenary.nvim'
-Plug 'https://github.com/nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-file-browser.nvim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'mfussenegger/nvim-dap'
-Plug 'leoluz/nvim-dap-go'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'nvim-telescope/telescope-dap.nvim'
-Plug 'norcalli/nvim-colorizer.lua'
 
 " code writing
 Plug 'Yggdroot/indentLine'

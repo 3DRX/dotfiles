@@ -8,7 +8,6 @@ let mapleader=" "
 runtime ./plug.vim
 runtime ./keybinding.vim
 runtime ./plugins/nerdtree.vim
-runtime ./plugins/telescope.vim
 runtime ./plugins/gitgutter.vim
 lua require("init")
 
@@ -57,7 +56,7 @@ if exists("&termguicolors") && exists("&winblend")
     " runtime ./colors/NeoSolarized.vim
     " colorscheme NeoSolarized
     "" Use TokyoNight
-    colorscheme tokyonight-night
+    colorscheme tokyonight
 endif
 hi Normal ctermfg=none ctermbg=none 
 highlight clear LineNr
