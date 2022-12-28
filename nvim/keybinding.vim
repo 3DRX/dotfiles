@@ -35,15 +35,10 @@ vnoremap K :m '<-2<CR>gv=gv
 vmap $ g_
 
 " Do not yank with x
-:lua vim.keymap.set('n', 'x', '"_x')
-
-" Increment/decrement
-:lua vim.keymap.set('n', '+', '<C-a>')
-:lua vim.keymap.set('n', '-', '<C-x>')
+nnoremap x "_x
 
 " Resize window
-:lua vim.keymap.set('n', '<C-w>h', '<C-w>>')
-:lua vim.keymap.set('n', '<C-w>l', '<C-w><')
-:lua vim.keymap.set('n', '<C-w>k', '<C-w>+')
-:lua vim.keymap.set('n', '<C-w>j', '<C-w>-')
-
+nnoremap <C-w>h <C-w>>
+nnoremap <C-w>j <C-w>-
+nnoremap <C-w>k <C-w>+
+nnoremap <C-w>l <C-w><

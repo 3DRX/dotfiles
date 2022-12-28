@@ -7,7 +7,6 @@ let mapleader=" "
 " imports
 runtime ./plug.vim
 runtime ./keybinding.vim
-runtime ./plugins/nerdtree.vim
 runtime ./plugins/gitgutter.vim
 lua require("init")
 
@@ -33,16 +32,14 @@ set nowrap
 set ignorecase
 set nobackup
 set nowritebackup
-set updatetime=300
+set updatetime=50
 set undodir=~/.vim/undodir
 set undofile
-set guifont=DejaVuSansMono\ Nerd\ Font:h20
-"encoding
+set mouse=
 set encoding=UTF-8
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
 
 " colorscheme
-let g:airline_theme='papercolor'
 if exists("&termguicolors") && exists("&winblend")
     syntax enable
     set termguicolors
@@ -50,18 +47,7 @@ if exists("&termguicolors") && exists("&winblend")
     set wildoptions=pum
     set pumblend=5
     set background=dark
-    "" Use NeoSolarized
-    " let g:neosolarized_termtrans=1
-    " let g:neosolarized_contrast="high"
-    " runtime ./colors/NeoSolarized.vim
-    " colorscheme NeoSolarized
-    "" Use TokyoNight
-    colorscheme tokyonight
+    colorscheme nord
 endif
-hi Normal ctermfg=none ctermbg=none 
-highlight clear LineNr
-
-"settings of indentLine
-let g:indent_guides_guide_size=1
-let g:indent_guides_start_level=2
-
+hi Normal ctermbg=256
+hi clear LineNr
