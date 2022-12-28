@@ -149,7 +149,7 @@ require("nvim-tree").setup {
     },
     git = {
         enable = true,
-        ignore = true,
+        ignore = false,
         show_on_dirs = true,
         show_on_open_dirs = true,
         timeout = 400,
@@ -175,7 +175,7 @@ require("nvim-tree").setup {
             },
         },
         open_file = {
-            quit_on_open = false,
+            quit_on_open = true,
             resize_window = true,
             window_picker = {
                 enable = true,
