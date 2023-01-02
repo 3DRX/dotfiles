@@ -27,6 +27,9 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'windwp/nvim-ts-autotag'
+Plug 'rafamadriz/friendly-snippets'
 
 call plug#end()
 

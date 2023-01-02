@@ -17,7 +17,6 @@ local snip = ls.snippet
 local text = ls.text_node
 local insert = ls.insert_node
 local func = ls.function_node
-require("luasnip.loaders.from_vscode").lazy_load()
 local date = function() return { os.date('%Y-%m-%d') } end
 ls.add_snippets(nil, {
     all = {
@@ -47,3 +46,6 @@ ls.add_snippets(nil, {
             }),
     },
 })
+
+require("luasnip.loaders.from_vscode").lazy_load()
+

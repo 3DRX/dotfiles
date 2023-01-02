@@ -2,16 +2,6 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 let mapleader=" "
-
-"------------------------------------------------------------------------------------
-" imports
-runtime ./plug.vim
-runtime ./keybinding.vim
-runtime ./plugins/gitgutter.vim
-lua require("init")
-
-"------------------------------------------------------------------------------------
-
 set number
 set cmdheight=2
 filetype on
@@ -39,7 +29,13 @@ set mouse=
 set encoding=UTF-8
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
 
-" colorscheme
+"------------------------------------------------------------------------------------
+" imports
+runtime ./plug.vim
+runtime ./keybinding.vim
+runtime ./plugins/gitgutter.vim
+lua require("init")
+
 if exists("&termguicolors") && exists("&winblend")
     syntax enable
     set termguicolors
