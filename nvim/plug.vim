@@ -30,6 +30,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCM
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'rafamadriz/friendly-snippets'
+" Plug 'mfussenegger/nvim-jdtls'
+
+" Plug '/Users/kjy/.local/share/nvim/my_plugins/aplugin.nvim'
 
 call plug#end()
 
