@@ -17,6 +17,32 @@ local function on_attach(client, bufnr)
     ]]
 end
 
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local workspace_dir = '/home/kjy/jdtls_workspaces/' .. project_name
+lspconfig.jdtls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    cmd = {
+        'java',
+        '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+        '-Dosgi.bundles.defaultStartLevel=4',
+        '-Declipse.product=org.eclipse.jdt.ls.core.product',
+        '-Dlog.protocol=true',
+        '-Dlog.level=ALL',
+        '-Xms1g',
+        '--add-modules=ALL-SYSTEM',
+        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+        '-jar',
+        '/home/kjy/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
+        '-configuration', '/home/kjy/.local/share/nvim/mason/packages/jdtls/config_linux',
+        '-data', workspace_dir
+    },
+}
+lspconfig.sqlls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 lspconfig.rust_analyzer.setup {
     capabilities = capabilities,
     on_attach = on_attach
@@ -61,14 +87,11 @@ lspconfig.pylsp.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-lspconfig.jdtls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
 lspconfig.cmake.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
+
 require("clangd_extensions").setup {
     server = {
         capabilities = capabilities,
@@ -137,13 +160,6 @@ require("clangd_extensions").setup {
         },
     }
 }
-
---  local config = {
---      cmd = { '/usr/local/bin/jdtls' },
---      root_dir = vim.fs.dirname(vim.fs.find({ '.gradlew', '.git', 'mvnw' }, { upward = true })[1]),
---  }
---  require('jdtls').start_or_attach(config)
-
 
 -- nvim-cmp
 vim.opt.completeopt = {
@@ -220,111 +236,47 @@ cmp.setup.filetype('gitcommit', {
 })
 
 -- Lspsaga
-local saga = require('lspsaga')
-saga.init_lsp_saga {
-    -- Options with default value
-    -- "single" | "double" | "rounded" | "bold" | "plus"
-    border_style = "rounded",
-    --the range of 0 for fully opaque window (disabled) to 100 for fully
-    --transparent background. Values between 0-30 are typically most useful.
-    saga_winblend = 10,
-    -- when cursor in saga window you config these to move
-    move_in_saga = { prev = '<C-p>', next = '<C-n>' },
-    -- Error, Warn, Info, Hint
-    -- use emoji like
-    -- { "🙀", "😿", "😾", "😺" }
-    -- or
-    -- { "😡", "😥", "😤", "😐" }
-    -- and diagnostic_header can be a function type
-    -- must return a string and when diagnostic_header
-    -- is function type it will have a param `entry`
-    -- entry is a table type has these filed
-    -- { bufnr, code, col, end_col, end_lnum, lnum, message, severity, source }
-    diagnostic_header = { " ", " ", " ", "ﴞ " },
-    -- preview lines of lsp_finder and definition preview
-    max_preview_lines = 10,
-    -- use emoji lightbulb in default
-    code_action_icon = "💡",
-    -- if true can press number to execute the codeaction in codeaction window
-    code_action_num_shortcut = true,
-    -- same as nvim-lightbulb but async
-    code_action_lightbulb = {
+require('lspsaga').setup({
+    lightbulb = {
         enable = false,
         enable_in_insert = false,
-        cache_code_action = true,
         sign = true,
-        update_time = 150,
-        sign_priority = 20,
+        sign_priority = 40,
         virtual_text = true,
     },
-    -- finder icons
-    finder_icons = {
-        def = '  ',
-        ref = '🔭 ',
-        link = '  ',
+    ui = {
+        theme = 'round',
+        -- this option only work in neovim 0.9
+        title = true,
+        -- border type can be single,double,rounded,solid,shadow.
+        border = 'rounded',
+        winblend = 0,
+        expand = '',
+        collapse = '',
+        preview = ' ',
+        code_action = '💡',
+        diagnostic = '🐞',
+        incoming = ' ',
+        outgoing = ' ',
+        colors = {
+            --float window normal background color
+            normal_bg = '#1d1536',
+            --title background color
+            title_bg = '#afd700',
+            red = '#e95678',
+            magenta = '#b33076',
+            orange = '#FF8700',
+            yellow = '#f7bb3b',
+            green = '#afd700',
+            cyan = '#36d0e0',
+            blue = '#61afef',
+            purple = '#CBA6F7',
+            white = '#d1d4cf',
+            black = '#1c1c19',
+        },
+        kind = {},
     },
-    -- finder do lsp request timeout
-    -- if your project big enough or your server very slow
-    -- you may need to increase this value
-    finder_request_timeout = 3000,
-    finder_action_keys = {
-        open = "<CR>",
-        vsplit = "s",
-        split = "i",
-        tabe = "t",
-        quit = "q",
-    },
-    code_action_keys = {
-        quit = "q",
-        exec = "<CR>",
-    },
-    definition_action_keys = {
-        edit = '<C-c>o',
-        vsplit = '<C-c>v',
-        split = '<C-c>i',
-        tabe = '<C-c>t',
-        quit = 'q',
-    },
-    rename_action_quit = "<C-c>",
-    rename_in_select = true,
-    -- show symbols in winbar must nightly
-    -- in_custom mean use lspsaga api to get symbols
-    -- and set it to your custom winbar or some winbar plugins.
-    -- if in_cusomt = true you must set in_enable to false
-    symbol_in_winbar = {
-        in_custom = false,
-        enable = true,
-        separator = ' ',
-        show_file = true,
-        -- define how to customize filename, eg: %:., %
-        -- if not set, use default value `%:t`
-        -- more information see `vim.fn.expand` or `expand`
-        -- ## only valid after set `show_file = true`
-        file_formatter = "",
-        click_support = false,
-    },
-    -- show outline
-    show_outline = {
-        win_position = 'right',
-        --set special filetype win that outline window split.like NvimTree neotree
-        -- defx, db_ui
-        win_with = '',
-        win_width = 30,
-        auto_enter = true,
-        auto_preview = true,
-        virt_text = '┃',
-        jump_key = 'o',
-        -- auto refresh when change buffer
-        auto_refresh = true,
-    },
-    -- custom lsp kind
-    -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
-    custom_kind = {},
-    -- if you don't use nvim-lspconfig you must pass your server name and
-    -- the related filetypes into this table
-    -- like server_filetype_map = { metals = { "sbt", "scala" } }
-    server_filetype_map = {},
-}
+})
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', '<Cmd>Lspsaga diagnostic_jump_next<cr>', opts)
@@ -334,3 +286,6 @@ vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<cr>', opts)
 vim.keymap.set('n', '<leader>rn', '<Cmd>Lspsaga rename<cr>', opts)
 vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
+vim.keymap.set("n", "<leader>ic", "<cmd>Lspsaga incoming_calls<CR>", opts)
+vim.keymap.set("n", "<leader>oc", "<cmd>Lspsaga outgoing_calls<CR>", opts)
+vim.keymap.set("n", "<leader>ot", "<cmd>Lspsaga outline<CR>", opts)
