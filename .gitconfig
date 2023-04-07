@@ -1,0 +1,35 @@
+# This is Git's per-user configuration file.
+[core]
+    editor = nvim
+
+[user]
+    name = 3DRX
+    email = kjy20030228@icloud.com
+
+[difftool]
+    prompt = true
+
+[diff]
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yello
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = red
