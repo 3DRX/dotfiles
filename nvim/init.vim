@@ -28,6 +28,7 @@ set undofile
 set mouse=
 set encoding=UTF-8
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
+set cmdheight=0
 
 "------------------------------------------------------------------------------------
 " imports
@@ -43,7 +44,6 @@ if exists("&termguicolors") && exists("&winblend")
     set wildoptions=pum
     set pumblend=5
     set background=dark
-    colorscheme nord
 endif
 hi Normal ctermbg=256
 hi clear LineNr

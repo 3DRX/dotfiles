@@ -6,9 +6,11 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
-Plug 'shaunsingh/nord.nvim'
+Plug 'tpope/vim-fugitive'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
+Plug 'EdenEast/nightfox.nvim'
 
 " code writing
 Plug 'nvim-lua/plenary.nvim'

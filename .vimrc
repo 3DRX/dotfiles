@@ -3,6 +3,9 @@ let &packpath = &runtimepath
 
 let mapleader=" "
 
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
 syntax on
 filetype on
 filetype indent on
@@ -31,7 +34,7 @@ set ignorecase
 set nobackup
 set updatetime=50
 set undofile
-colo ron
+colorscheme torte
 highlight Normal ctermbg=256
 "encoding
 set encoding=UTF-8
@@ -95,3 +98,6 @@ inoremap <expr> ' ConditionalPairMap('''', '''')
 inoremap <expr> " ConditionalPairMap('"', '"')
 inoremap <expr> $ ConditionalPairMap('$', '$')
 
+
+map <C-f> <Nop>
+nmap <C-f> ggVG=<C-o><C-o>

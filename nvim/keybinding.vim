@@ -42,3 +42,6 @@ nnoremap <C-w>h <C-w>>
 nnoremap <C-w>j <C-w>-
 nnoremap <C-w>k <C-w>+
 nnoremap <C-w>l <C-w><
+
+map <C-f> <Nop>
+nmap <C-f> ggVG=<C-o>
