@@ -8,11 +8,13 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'toppair/peek.nvim', { 'do': 'deno task --quiet build:fast'}
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
-Plug 'EdenEast/nightfox.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 " code writing
+Plug 'zbirenbaum/copilot.lua'
+Plug 'zbirenbaum/copilot-cmp'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'https://github.com/neovim/nvim-lspconfig'

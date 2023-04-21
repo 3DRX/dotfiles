@@ -1,53 +1,28 @@
-require 'nordic'.setup {
-    -- Available themes: 'nordic', 'onedark'.
-    -- Onedark is WIP.
-    theme = 'nordic',
-    -- Enable bold keywords.
-    bold_keywords = false,
-    -- Enable italic comments.
-    italic_comments = true,
-    -- Enable general editor background transparency.
-    transparent_bg = false,
-    -- Enable brighter float border.
-    bright_border = true,
-    -- Nordic specific options.
-    -- Set all to false to use original Nord colors.
-    -- Adjusts some colors to make the theme a bit nicer (imo).
-    nordic = {
-        -- Reduce the overall amount of blue in the theme (diverges from base Nord).
-        reduced_blue = true,
+-- Default options:
+require('kanagawa').setup({
+    compile = false,             -- enable compiling the colorscheme
+    undercurl = true,            -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true},
+    statementStyle = { bold = true },
+    typeStyle = {},
+    transparent = false,         -- do not set background color
+    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+    colors = {                   -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
     },
-    -- Onedark specific options.
-    -- Set all to false to keep original onedark colors.
-    -- Adjusts some colors to make the theme a bit nicer (imo).
-    -- WIP.
-    onedark = {
-        -- Brighten the whites to fit the theme better.
-        brighter_whites = true,
+    overrides = function(colors) -- add/modify highlights
+        return {}
+    end,
+    theme = "wave",              -- Load "wave" theme when 'background' option is not set
+    background = {               -- map the value of 'background' option to a theme
+        dark = "wave",           -- try "dragon" !
+        light = "lotus"
     },
-    -- Override the styling of any highlight group.
-    override = {},
-    cursorline = {
-        -- Enable bold font in cursorline.
-        bold = false,
-        -- Avialable styles: 'dark', 'light'.
-        theme = 'light',
-        -- Hide the cursorline when the window is not focused.
-        hide_unfocused = true,
-    },
-    noice = {
-        -- Available styles: `classic`, `flat`.
-        style = 'classic',
-    },
-    telescope = {
-        -- Available styles: `classic`, `flat`.
-        style = 'classic',
-    },
-    leap = {
-        -- Dims the backdrop when using leap.
-        dim_backdrop = false,
-    },
-}
+})
 
-vim.cmd("colorscheme nordic")
+vim.cmd("colorscheme kanagawa")
 

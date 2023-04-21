@@ -43,6 +43,10 @@ lspconfig.jsonls.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
+lspconfig.metals.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 lspconfig.sqlls.setup {
     capabilities = capabilities,
     on_attach = on_attach
@@ -199,7 +203,6 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()

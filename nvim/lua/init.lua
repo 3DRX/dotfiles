@@ -9,4 +9,5 @@ require("configs.telescope")
 require("configs.indentline")
 require("configs.colorizer")
 require("configs.autotag")
-
+require("configs.peek")
+require("configs.copilot")

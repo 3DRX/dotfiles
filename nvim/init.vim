@@ -3,7 +3,6 @@ let &packpath = &runtimepath
 
 let mapleader=" "
 set number
-set cmdheight=2
 filetype on
 filetype indent on
 filetype plugin on
@@ -29,6 +28,7 @@ set mouse=
 set encoding=UTF-8
 set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
 set cmdheight=0
+set clipboard+=unnamedplus
 
 "------------------------------------------------------------------------------------
 " imports
