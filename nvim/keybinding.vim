@@ -17,11 +17,11 @@ nnoremap <silent> <C-\> :vsplit<CR><C-w>l
 nnoremap <silent> <C-w>s :split<CR><C-w>j
 
 " close window
-nnoremap <C-q> :q<CR>
+nnoremap <silent> <C-q> :q<CR>
 
 " save file
-nnoremap <C-s> :wa<CR>
-imap <c-s> <Esc>:wa<CR>a
+nnoremap <silent> <C-s> :wa<CR>
+imap <silent> <c-s> <Esc>:wa<CR>a
 
 " fix jump list
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'

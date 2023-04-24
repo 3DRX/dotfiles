@@ -11,3 +11,5 @@ require("configs.colorizer")
 require("configs.autotag")
 require("configs.peek")
 require("configs.copilot")
+require("configs.noice")
+
