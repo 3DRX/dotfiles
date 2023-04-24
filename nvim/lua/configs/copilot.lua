@@ -38,8 +38,10 @@ require('copilot').setup({
         cvs = false,
         ["."] = false,
     },
-    copilot_node_command = 'node', -- Node.js version must be > 16.x
-    server_opts_overrides = {},
+    server_opts_overrides = {
+        enabled = false
+    },
+    copilot_node_command = "/home/kjy/.nvm/versions/node/v16.20.0/bin/node",
 })
 
 -- require("copilot").setup({

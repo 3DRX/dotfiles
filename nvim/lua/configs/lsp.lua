@@ -100,9 +100,13 @@ lspconfig.cmake.setup {
     on_attach = on_attach
 }
 
+local clangd_capabilities = capabilities
+clangd_capabilities.textDocument.semanticHighlighting = true
+clangd_capabilities.offsetEncoding = "utf-8"
+
 require("clangd_extensions").setup {
     server = {
-        capabilities = capabilities,
+        capabilities = clangd_capabilities,
         on_attach = on_attach,
     },
     extensions = {
