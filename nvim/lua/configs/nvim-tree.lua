@@ -18,7 +18,7 @@ require("nvim-tree").setup({
     }
 })
 
-vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>", {})
+vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>", {silent = true})
 
 local function open_nvim_tree(data)
     -- buffer is a [No Name]

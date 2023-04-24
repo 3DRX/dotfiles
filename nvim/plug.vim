@@ -14,6 +14,7 @@ Plug 'rebelot/kanagawa.nvim'
 Plug 'rcarriga/nvim-notify'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/noice.nvim'
+Plug 'davidgranstrom/nvim-markdown-preview'
 
 " code writing
 Plug 'zbirenbaum/copilot.lua'
