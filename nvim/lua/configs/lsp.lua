@@ -287,6 +287,36 @@ require('lspsaga').setup({
         },
         kind = {},
     },
+    outline = {
+        win_position = "right",
+        win_with = "",
+        win_width = 30,
+        preview_width = 0.4,
+        show_detail = true,
+        auto_preview = true,
+        auto_refresh = true,
+        auto_close = true,
+        custom_sort = nil,
+        keys = {
+            expand_or_jump = '<CR>',
+            quit = "q",
+        },
+    },
+    finder = {
+        max_height = 0.5,
+        min_width = 30,
+        force_max_height = false,
+        keys = {
+            jump_to = 'p',
+            expand_or_jump = '<CR>',
+            vsplit = 's',
+            split = 'i',
+            tabe = 't',
+            tabnew = 'r',
+            quit = { 'q', '<ESC>' },
+            close_in_preview = '<ESC>',
+        },
+    },
 })
 
 local opts = { noremap = true, silent = true }
