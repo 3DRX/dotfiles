@@ -1,12 +1,12 @@
 -- Luasnip
 -- key map
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
+vim.keymap.set({ "i", "s" }, "<C-\">", function()
     if ls.expand_or_jumpable() then
         ls.expand_or_jump()
     end
 end, { silent = true })
 
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+vim.keymap.set({ "i", "s" }, "<C-;>", function()
     if ls.jumpable(-1) then
         ls.jump(-1)
     end
@@ -28,24 +28,23 @@ ls.add_snippets(nil, {
             func(date, {}),
         }),
         snip({
-            trig = "meta",
-            namr = "Metadata",
-            dscr = "Yaml metadata format for markdown"
-        },
+                trig = "meta",
+                namr = "Metadata",
+                dscr = "Yaml metadata format for markdown"
+            },
             {
                 text({ "---",
                     "title: " }), insert(1, "note_title"), text({ "",
-                    "author: " }), insert(2, "author"), text({ "",
-                    "date: " }), func(date, {}), text({ "",
-                    "categories: [" }), insert(3, ""), text({ "]",
-                    "lastmod: " }), func(date, {}), text({ "",
-                    "tags: [" }), insert(4), text({ "]",
-                    "comments: true",
-                    "---", "" }),
+                "author: " }), insert(2, "author"), text({ "",
+                "date: " }), func(date, {}), text({ "",
+                "categories: [" }), insert(3, ""), text({ "]",
+                "lastmod: " }), func(date, {}), text({ "",
+                "tags: [" }), insert(4), text({ "]",
+                "comments: true",
+                "---", "" }),
                 insert(0)
             }),
     },
 })
 
 require("luasnip.loaders.from_vscode").lazy_load()
-

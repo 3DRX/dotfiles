@@ -197,4 +197,4 @@ require("noice").setup({
     format = {}, --- @see section on formatting
 })
 
-vim.keymap.set("n", "<leader>nt", ":Noice telescope<CR>", { buffer = 0 })
+vim.keymap.set("n", "<leader>;", ":Noice telescope<CR>", { buffer = 0, silent = true })
