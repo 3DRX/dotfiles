@@ -16,7 +16,7 @@ require('copilot').setup({
     },
     suggestion = {
         enabled = true,
-        auto_trigger = true,
+        auto_trigger = false,
         debounce = 75,
         keymap = {
             accept = "<Right>",
@@ -41,7 +41,7 @@ require('copilot').setup({
     server_opts_overrides = {
         enabled = false
     },
-    copilot_node_command = "/home/kjy/.nvm/versions/node/v16.20.0/bin/node",
+    copilot_node_command = "/home/kjy/.nvm/versions/node/v16.20.1/bin/node",
 })
 
 -- require("copilot").setup({
