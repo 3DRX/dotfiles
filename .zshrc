@@ -5,23 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,7 +31,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -72,13 +58,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+    autojump
     zsh-autosuggestions
 )
 
@@ -110,9 +92,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-[[ -s /home/kjy/.autojump/etc/profile.d/autojump.sh ]] && source /home/kjy/.autojump/etc/profile.d/autojump.sh
-
-autoload -U compinit && compinit -u
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 proxy () {
     export http_proxy=http://127.0.0.1:7890
@@ -126,12 +107,27 @@ noproxy () {
     echo "proxy off"
 }
 
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+ff() {
+    cd $(find * -type d | fzf)
+}
+
+use_depot() {
+    PATH="/home/kjy/Documents/depot_tools:$PATH"
+    echo "depot_tools added to PATH"
+}
+
+vman() {
+    vim <(man $1);
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/kjy/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -145,20 +141,3 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export XILINX_VIVADO=/opt/Xilinx/Vivado/2022.2
-if [ -n "${PATH}" ]; then
-    export PATH=/opt/Xilinx/Vivado/2022.2/bin:$PATH
-else
-    export PATH=/opt/Xilinx/Vivado/2022.2/bin
-fi
-
-export XILINX_HLS=/opt/Xilinx/Vitis_HLS/2022.2
-if [ -n "${PATH}" ]; then
-    export PATH=/opt/Xilinx/Vitis_HLS/2022.2/bin:$PATH
-else
-    export PATH=/opt/Xilinx/Vitis_HLS/2022.2/bin
-fi
-
-export SUDO_EDITOR="nvim"
-
-alias globalprotect="sudo openconnect --protocol=gp --script=/etc/vpnc/vpnc-script vpn.bupt.edu.cn"
