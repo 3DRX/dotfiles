@@ -14,14 +14,22 @@ config.colors = {
     background = "#000000",
 }
 config.cursor_blink_rate = 0
-config.font = wezterm.font("DejaVuSansM Nerd Font Mono", { weight = "Regular" })
 config.font_size = 18.0
 config.keys = {
     { key = "c", mods = "ALT", action = wezterm.action { CopyTo = "Clipboard" } },
     { key = "v", mods = "ALT", action = wezterm.action { PasteFrom = "Clipboard" } },
     { key = "w", mods = "ALT", action = wezterm.action.CloseCurrentTab { confirm = false } },
 }
-config.window_decorations = "TITLE | RESIZE"
+if wezterm.target_triple == 'x86_64-unknown-linux-gnu' then
+    config.font = wezterm.font("DejaVuSansM Nerd Font Mono", { weight = "Regular" })
+    config.window_decorations = "TITLE | RESIZE"
+elseif wezterm.target_triple == 'x86_64-apple-darwin' then
+    config.font = wezterm.font("DejaVuSansMono Nerd Font", { weight = "Regular" })
+    config.window_decorations = "RESIZE"
+elseif wezterm.target_triple == 'aarch64-apple-darwin' then
+    config.font = wezterm.font("DejaVuSansMono Nerd Font", { weight = "Regular" })
+    config.window_decorations = "RESIZE"
+end
 config.window_close_confirmation = 'NeverPrompt'
 config.window_frame = {
     inactive_titlebar_bg = '#000000',
