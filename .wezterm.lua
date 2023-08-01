@@ -26,11 +26,11 @@ config.window_close_confirmation = 'NeverPrompt'
 config.window_frame = {
     inactive_titlebar_bg = '#000000',
     active_titlebar_bg = '#000000',
-    inactive_titlebar_fg = '#ffffff',
-    active_titlebar_fg = '#ffffff',
+    inactive_titlebar_fg = '#000000',
+    active_titlebar_fg = '#000000',
     inactive_titlebar_border_bottom = '#000000',
     active_titlebar_border_bottom = '#000000',
-    button_fg = '#ffffff',
+    button_fg = '#000000',
     button_bg = '#000000',
     button_hover_fg = '#ffffff',
     button_hover_bg = '#000000',
@@ -51,6 +51,13 @@ config.window_padding = {
 }
 config.hide_tab_bar_if_only_one_tab = true
 config.hide_mouse_cursor_when_typing = false
+config.mouse_bindings = {
+    {
+        event = { Up = { streak = 1, button = "Left" } },
+        mods = "NONE",
+        action = wezterm.action.Nop,
+    },
+}
 
 -- some hack to fix cursor missing under wayland
 local function gsettings(key)
