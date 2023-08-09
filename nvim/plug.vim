@@ -1,6 +1,4 @@
 call plug#begin()
-
-" UI
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -15,8 +13,6 @@ Plug 'rcarriga/nvim-notify'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/noice.nvim'
 Plug 'davidgranstrom/nvim-markdown-preview'
-
-" code writing
 Plug 'zbirenbaum/copilot.lua'
 Plug 'zbirenbaum/copilot-cmp'
 Plug 'nvim-lua/plenary.nvim'
@@ -33,11 +29,12 @@ Plug 'https://github.com/p00f/clangd_extensions.nvim'
 Plug 'williamboman/mason.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'numToStr/Comment.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'debugloop/telescope-undo.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'rafamadriz/friendly-snippets'
-
+Plug 'lervag/vimtex'
+Plug 'kevinhwang91/nvim-bqf'
 call plug#end()
-

@@ -12,4 +12,8 @@ require("configs.autotag")
 require("configs.peek")
 require("configs.copilot")
 require("configs.noice")
+require("configs.bqf")
 
+if vim.g.neovide then
+    require("configs.neovide")
+end

@@ -35,6 +35,7 @@ set clipboard+=unnamedplus
 runtime ./plug.vim
 runtime ./keybinding.vim
 runtime ./plugins/gitgutter.vim
+runtime ./plugins/tex.vim
 lua require("init")
 
 if exists("&termguicolors") && exists("&winblend")

@@ -6,9 +6,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" copy to system clipboard via <Ctrl-c> in visual mode.
-vnoremap <C-c> "+y
-
 " select all
 nnoremap <C-a> ggVG
 
@@ -20,12 +17,8 @@ nnoremap <silent> <C-w>s :split<CR><C-w>j
 nnoremap <silent> <C-q> :q<CR>
 
 " save file
-nnoremap <silent> <C-s> :wa<CR>
-imap <silent> <c-s> <Esc>:wa<CR>a
-
-" fix jump list
-nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
-nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+nnoremap <silent> <C-s> :w<CR>
+imap <silent> <c-s> <Esc>:w<CR>a
 
 " line moving dark-art
 vnoremap J :m '>+1<CR>gv=gv

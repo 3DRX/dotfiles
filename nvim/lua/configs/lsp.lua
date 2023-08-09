@@ -17,27 +17,24 @@ local function on_attach(client, bufnr)
     ]]
 end
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local workspace_dir = '/home/kjy/jdtls_workspaces/' .. project_name
 lspconfig.jdtls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
+lspconfig.astro.setup {
     capabilities = capabilities,
     on_attach = on_attach,
     cmd = {
-        'java',
-        '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-        '-Dosgi.bundles.defaultStartLevel=4',
-        '-Declipse.product=org.eclipse.jdt.ls.core.product',
-        '-Dlog.protocol=true',
-        '-Dlog.level=ALL',
-        '-Xms1g',
-        '--add-modules=ALL-SYSTEM',
-        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        '-jar',
-        '/home/kjy/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
-        '-configuration', '/home/kjy/.local/share/nvim/mason/packages/jdtls/config_linux',
-        '-data', workspace_dir
+        "astro-ls",
+        "--stdio"
     },
+    filetypes = {
+        "astro"
+    },
+    init_options = {
+        typescript = {
+        }
+    }
 }
 lspconfig.jsonls.setup {
     capabilities = capabilities,
@@ -55,10 +52,10 @@ lspconfig.rust_analyzer.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
--- lspconfig.marksman.setup {
---     capabilities = capabilities,
---     on_attach = on_attach
--- }
+lspconfig.marksman.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
+}
 lspconfig.bashls.setup {
     capabilities = capabilities,
     on_attach = on_attach
