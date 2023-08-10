@@ -96,78 +96,9 @@ lspconfig.cmake.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-
-local clangd_capabilities = capabilities
-clangd_capabilities.textDocument.semanticHighlighting = true
-clangd_capabilities.offsetEncoding = "utf-8"
-
-require("clangd_extensions").setup {
-    server = {
-        capabilities = clangd_capabilities,
-        on_attach = on_attach,
-    },
-    extensions = {
-        -- defaults:
-        -- Automatically set inlay hints (type hints)
-        autoSetHints = false,
-        -- These apply to the default ClangdSetInlayHints command
-        inlay_hints = {
-            -- Only show inlay hints for the current line
-            only_current_line = false,
-            -- Event which triggers a refersh of the inlay hints.
-            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-            -- not that this may cause  higher CPU usage.
-            -- This option is only respected when only_current_line and
-            -- autoSetHints both are true.
-            only_current_line_autocmd = "CursorHold",
-            -- whether to show parameter hints with the inlay hints or not
-            show_parameter_hints = true,
-            -- prefix for parameter hints
-            parameter_hints_prefix = "<- ",
-            -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "=> ",
-            -- whether to align to the length of the longest line in the file
-            max_len_align = false,
-            -- padding from the left if max_len_align is true
-            max_len_align_padding = 1,
-            -- whether to align to the extreme right or not
-            right_align = true,
-            -- padding from the right if right_align is true
-            right_align_padding = 0,
-            -- The color of the hints
-            highlight = "Comment",
-            -- The highlight group priority for extmark
-            priority = 0,
-        },
-        ast = {
-            role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
-            },
-            kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
-            },
-            highlights = {
-                detail = "Comment",
-            },
-            memory_usage = {
-                border = "none",
-            },
-            symbol_info = {
-                border = "none",
-            },
-        },
-    }
+lspconfig.clangd.setup {
+    capabilities = capabilities,
+    on_attach = on_attach
 }
 
 -- nvim-cmp
@@ -176,10 +107,6 @@ vim.opt.completeopt = {
     "menuone",
     "noselect"
 }
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
 local cmp = require("cmp")
 cmp.setup({
     snippet = {
@@ -188,16 +115,12 @@ cmp.setup({
         end,
     },
     window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif has_words_before() then
-                cmp.complete()
             else
                 fallback()
             end
@@ -222,7 +145,6 @@ cmp.setup({
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.recently_used,
-            require("clangd_extensions.cmp_scores"),
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
@@ -233,7 +155,7 @@ cmp.setup({
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+        { name = 'cmp_git' },
     }, {
         { name = 'buffer' },
     })
@@ -250,10 +172,9 @@ require('lspsaga').setup({
     },
     ui = {
         theme = 'round',
-        -- this option only work in neovim 0.9
         title = true,
         -- border type can be single,double,rounded,solid,shadow.
-        border = 'rounded',
+        border = 'solid',
         winblend = 0,
         expand = '',
         collapse = '',
@@ -296,18 +217,19 @@ require('lspsaga').setup({
         },
     },
     finder = {
-        max_height = 0.5,
-        min_width = 30,
-        force_max_height = false,
+        -- max_height = 0.5,
+        -- min_width = 30,
+        -- force_max_height = false,
+        default = 'def+ref+imp+tyd',
         keys = {
-            jump_to = 'p',
-            expand_or_jump = '<CR>',
+            shuttle = '[w',
+            toggle_or_open = '<CR>',
             vsplit = 's',
             split = 'i',
             tabe = 't',
             tabnew = 'r',
             quit = { 'q', '<ESC>' },
-            close_in_preview = '<ESC>',
+            close = '<ESC>',
         },
     },
 })
@@ -316,10 +238,9 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>df', '<Cmd>Lspsaga diagnostic_jump_next<cr>', opts)
 vim.keymap.set('n', '<leader>dp', '<Cmd>Lspsaga diagnostic_jump_prev<cr>', opts)
 vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<cr>', opts)
-vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<cr>', opts)
+vim.keymap.set('n', 'gd', '<Cmd>Lspsaga finder<cr>', opts)
 vim.keymap.set('n', '<leader>rn', '<Cmd>Lspsaga rename<cr>', opts)
 vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
-vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
 vim.keymap.set("n", "<leader>ic", "<cmd>Lspsaga incoming_calls<CR>", opts)
 vim.keymap.set("n", "<leader>oc", "<cmd>Lspsaga outgoing_calls<CR>", opts)
 vim.keymap.set("n", "<leader>ot", "<cmd>Lspsaga outline<CR>", opts)
