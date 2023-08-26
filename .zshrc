@@ -12,6 +12,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
+# Firefox Chinese input
+export LC_CTYPE=zh_CN.UTF-8
+
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -119,6 +122,11 @@ use_depot() {
     echo "depot_tools added to PATH"
 }
 
+use_bin() {
+    PATH="/home/kjy/bin:$PATH"
+    echo "~/bin added to PATH"
+}
+
 vman() {
     vim <(man $1);
 }
@@ -141,3 +149,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# Created by `pipx` on 2023-07-16 15:52:56
+export PATH="$PATH:/home/kjy/.local/bin"
