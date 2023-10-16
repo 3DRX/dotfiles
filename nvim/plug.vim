@@ -9,9 +9,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'toppair/peek.nvim', { 'do': 'deno task --quiet build:fast'}
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 Plug 'rebelot/kanagawa.nvim'
-Plug 'rcarriga/nvim-notify'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'folke/noice.nvim'
 Plug 'davidgranstrom/nvim-markdown-preview'
 Plug 'zbirenbaum/copilot.lua'
 Plug 'zbirenbaum/copilot-cmp'

@@ -84,10 +84,6 @@ lspconfig.html.setup {
     capabilities = capabilities,
     on_attach = on_attach
 }
-lspconfig.jedi_language_server.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
 lspconfig.pylsp.setup {
     capabilities = capabilities,
     on_attach = on_attach
@@ -98,7 +94,11 @@ lspconfig.cmake.setup {
 }
 lspconfig.clangd.setup {
     capabilities = capabilities,
-    on_attach = on_attach
+    on_attach = on_attach,
+    cmd = {
+        "clangd",
+        "--offset-encoding=utf-16",
+    },
 }
 
 -- nvim-cmp

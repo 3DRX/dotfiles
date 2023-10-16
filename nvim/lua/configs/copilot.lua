@@ -41,7 +41,7 @@ require('copilot').setup({
     server_opts_overrides = {
         enabled = false
     },
-    copilot_node_command = "/home/kjy/.nvm/versions/node/v16.20.1/bin/node",
+    copilot_node_command = "node",
 })
 
 -- require("copilot").setup({
