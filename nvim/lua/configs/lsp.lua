@@ -1,104 +1,56 @@
--- LSP
+require('neodev').setup()
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-require("mason").setup()
-local lspconfig = require("lspconfig")
-local function on_attach(client, bufnr)
+local function on_attach(_, _)
     vim.keymap.set("n", "<C-f>", vim.lsp.buf.format, { buffer = 0 })
     vim.cmd [[
     highlight! DiagnosticLineNrError guibg=#3b161e guifg=#b01e1e gui=bold
     highlight! DiagnosticLineNrWarn guibg=#3b2f1e guifg=#a16b1d gui=bold
     highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#1cbaba gui=bold
     highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#195dd1 gui=bold
-
     sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
     sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
     sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
     ]]
 end
-
-lspconfig.jdtls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.astro.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    cmd = {
-        "astro-ls",
-        "--stdio"
+require("mason").setup()
+local mason_lspconfig = require('mason-lspconfig')
+-- server configs, if {} is passed, default config is used
+local servers = {
+    lua_ls = {},
+    ruff_lsp = {},
+    pylsp = {},
+    rust_analyzer = {},
+    jsonls = {},
+    tsserver = {},
+    clangd = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        cmd = {
+            "clangd",
+            "--offset-encoding=utf-16",
+        },
     },
-    filetypes = {
-        "astro"
-    },
-    init_options = {
-        typescript = {
-        }
-    }
 }
-lspconfig.jsonls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
+mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
 }
-lspconfig.metals.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.sqlls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.rust_analyzer.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.marksman.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.bashls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.cssls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.ltex.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.vimls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.lua_ls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.tsserver.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.html.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.pylsp.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.cmake.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-}
-lspconfig.clangd.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    cmd = {
-        "clangd",
-        "--offset-encoding=utf-16",
-    },
+if not table.unpack then
+    table.unpack = unpack
+end
+mason_lspconfig.setup_handlers {
+    function(server_name)
+        local server_config = {}
+        if (not servers[server_name]) or servers[server_name] == {} then
+            server_config = {
+                capabilities = capabilities,
+                on_attach = on_attach
+            }
+        else
+            server_config = servers[server_name]
+        end
+        require('lspconfig')[server_name].setup(server_config)
+    end,
 }
 
 -- nvim-cmp
@@ -138,8 +90,8 @@ cmp.setup({
         { name = 'luasnip' },
         { name = 'path' },
     }, {
-        { name = 'buffer' },
-    }),
+            { name = 'buffer' },
+        }),
     sorting = {
         comparators = {
             cmp.config.compare.offset,
@@ -157,8 +109,8 @@ cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
         { name = 'cmp_git' },
     }, {
-        { name = 'buffer' },
-    })
+            { name = 'buffer' },
+        })
 })
 
 -- Lspsaga

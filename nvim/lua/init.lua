@@ -1,5 +1,5 @@
 require("configs.nvim-tree")
-require("configs.luasnipConfig")
+require("configs.luasnip")
 require("configs.lsp")
 require("configs.comment")
 require("configs.treesitter")
@@ -12,7 +12,3 @@ require("configs.autotag")
 require("configs.peek")
 require("configs.copilot")
 require("configs.bqf")
-
-if vim.g.neovide then
-    require("configs.neovide")
-end

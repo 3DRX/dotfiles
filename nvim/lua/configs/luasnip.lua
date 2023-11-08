@@ -1,18 +1,17 @@
 -- Luasnip
+local ls = require("luasnip")
 -- key map
 vim.keymap.set({ "i", "s" }, "<C-\">", function()
     if ls.expand_or_jumpable() then
         ls.expand_or_jump()
     end
 end, { silent = true })
-
 vim.keymap.set({ "i", "s" }, "<C-;>", function()
     if ls.jumpable(-1) then
         ls.jump(-1)
     end
 end, { silent = true })
 -- snippets
-local ls = require("luasnip")
 local snip = ls.snippet
 local text = ls.text_node
 local insert = ls.insert_node
