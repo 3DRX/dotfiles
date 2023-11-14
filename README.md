@@ -10,3 +10,7 @@ but for improving my productivity when coding and quick setup on any machine, re
 This doesn't mean I never adapt newer feature,
 if there's a need, I will do it, and maybe switch to a full lua config.
 
+## TODOs
+
+- [ ] Add [neotest](https://github.com/nvim-neotest/neotest) in nvim config.
+
