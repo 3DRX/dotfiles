@@ -30,6 +30,7 @@ Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'debugloop/telescope-undo.nvim'
+Plug 'ThePrimeagen/harpoon'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'rafamadriz/friendly-snippets'
