@@ -16,8 +16,8 @@ source $ZSH/oh-my-zsh.sh
 
 # user commands
 proxy () {
-    export http_proxy=http://127.0.0.1:7890
-    export https_proxy=http://127.0.0.1:7890
+    export http_proxy=http://127.0.0.1:7891
+    export https_proxy=http://127.0.0.1:7891
     echo "proxy on"
 }
 noproxy () {
@@ -25,8 +25,8 @@ noproxy () {
     unset https_proxy
     echo "proxy off"
 }
-export http_proxy=http://127.0.0.1:7890
-export https_proxy=http://127.0.0.1:7890
+export http_proxy=http://127.0.0.1:7891
+export https_proxy=http://127.0.0.1:7891
 ff() {
     cd $(find * -type d | fzf)
 }
@@ -44,6 +44,20 @@ vman() {
 ch() {
     ~/.cht.sh
 }
+case `uname` in
+  Darwin)
+  ;;
+  Linux)
+    fullspeed_fan() {
+        echo "level 7" | sudo tee /proc/acpi/ibm/fan
+    }
+    autospeed_fan() {
+        echo "level auto" | sudo tee /proc/acpi/ibm/fan
+    }
+  ;;
+  FreeBSD)
+  ;;
+esac
 
 # application settings
 
