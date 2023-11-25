@@ -49,10 +49,19 @@ case `uname` in
   ;;
   Linux)
     fullspeed_fan() {
-        echo "level 7" | sudo tee /proc/acpi/ibm/fan
+      echo "level 7" | sudo tee /proc/acpi/ibm/fan
     }
     autospeed_fan() {
-        echo "level auto" | sudo tee /proc/acpi/ibm/fan
+      echo "level auto" | sudo tee /proc/acpi/ibm/fan
+    }
+    fullspeed_clock() {
+      sudo cpupower frequency-set --governor performance
+    }
+    fullspeed_clock() {
+      sudo cpupower frequency-set --governor performance
+    }
+    autospeed_clock() {
+      sudo cpupower frequency-set --governor powersave
     }
   ;;
   FreeBSD)
