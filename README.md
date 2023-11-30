@@ -12,5 +12,6 @@ if there's a need, I will do it, and maybe switch to a full lua config.
 
 ## TODOs
 
-- [ ] Add [neotest](https://github.com/nvim-neotest/neotest) in nvim config.
+- [ ] Add [neotest](https://github.com/nvim-neotest/neotest) to nvim config.
+- [ ] Add [conform.nvim](https://github.com/stevearc/conform.nvim) to nvim config.
 
