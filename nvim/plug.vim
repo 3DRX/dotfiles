@@ -36,4 +36,5 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'lervag/vimtex'
 Plug 'kevinhwang91/nvim-bqf'
+Plug 'stevearc/conform.nvim'
 call plug#end()
