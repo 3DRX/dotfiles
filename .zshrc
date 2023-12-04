@@ -57,9 +57,6 @@ case `uname` in
     fullspeed_clock() {
       sudo cpupower frequency-set --governor performance
     }
-    fullspeed_clock() {
-      sudo cpupower frequency-set --governor performance
-    }
     autospeed_clock() {
       sudo cpupower frequency-set --governor powersave
     }
