@@ -7,6 +7,8 @@ require("conform").setup({
         astro = prettier,
         css = prettier,
         html = prettier,
+        typescriptreact = prettier,
+        javascriptreact = prettier
     },
     formatters = {
         prettier = {
