@@ -6,7 +6,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'toppair/peek.nvim', { 'do': 'deno task --quiet build:fast'}
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 Plug 'rebelot/kanagawa.nvim'
 Plug 'davidgranstrom/nvim-markdown-preview'
@@ -37,4 +36,7 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'lervag/vimtex'
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'stevearc/conform.nvim'
+Plug 'folke/noice.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'rcarriga/nvim-notify'
 call plug#end()

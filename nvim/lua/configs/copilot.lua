@@ -10,7 +10,7 @@ require('copilot').setup({
             open = "<M-CR>"
         },
         layout = {
-            position = "right", -- | top | left | right
+            position = "right",
             ratio = 0.4
         },
     },
@@ -43,8 +43,3 @@ require('copilot').setup({
     },
     copilot_node_command = "node",
 })
-
--- require("copilot").setup({
---     suggestion = { enabled = false },
---     panel = { enabled = false },
--- })
