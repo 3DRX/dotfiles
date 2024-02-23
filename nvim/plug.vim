@@ -39,4 +39,5 @@ Plug 'stevearc/conform.nvim'
 Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'rcarriga/nvim-notify'
+Plug 'tpope/vim-sleuth'
 call plug#end()
