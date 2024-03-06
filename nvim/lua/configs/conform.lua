@@ -1,4 +1,5 @@
 local prettier = { "prettier" }
+local rustfmt = { "rustfmt" }
 
 require("conform").setup({
     formatters_by_ft = {
@@ -8,7 +9,8 @@ require("conform").setup({
         css = prettier,
         html = prettier,
         typescriptreact = prettier,
-        javascriptreact = prettier
+        javascriptreact = prettier,
+        rust = rustfmt,
     },
     formatters = {
         prettier = {
