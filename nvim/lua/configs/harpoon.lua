@@ -1,3 +1,8 @@
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>mm", '<cmd>lua require("harpoon.mark").add_file()<cr>', opts)
-vim.keymap.set("n", "<leader>fm", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', opts)
+local harpoon = require("harpoon")
+harpoon:setup()
+vim.keymap.set("n", "<leader>mm", function()
+	harpoon:list():append()
+end)
+vim.keymap.set("n", "<leader>fm", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
