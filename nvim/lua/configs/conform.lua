@@ -3,6 +3,7 @@ local rustfmt = { "rustfmt" }
 local ruff_format = { "ruff_format" }
 local clang_format = { "clang_format" }
 local stylua = { "stylua" }
+local gofmt = { "gofmt" }
 
 require("conform").setup({
 	formatters_by_ft = {
@@ -15,6 +16,8 @@ require("conform").setup({
 		javascriptreact = prettier,
 		python = ruff_format,
 		c = clang_format,
+		cpp = clang_format,
+		go = gofmt,
 		rust = rustfmt,
 		lua = stylua,
 	},
