@@ -40,4 +40,5 @@ Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'rcarriga/nvim-notify'
 Plug 'tpope/vim-sleuth'
+Plug 'sindrets/diffview.nvim'
 call plug#end()

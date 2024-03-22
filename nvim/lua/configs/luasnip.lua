@@ -13,4 +13,4 @@ vim.keymap.set({ "i", "s" }, "<C-Up>", function()
 		ls.change_choice(1)
 	end
 end, { silent = true })
--- require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
