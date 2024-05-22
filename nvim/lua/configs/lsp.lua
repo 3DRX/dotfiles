@@ -31,9 +31,9 @@ local servers = {
 		},
 	},
 }
-mason_lspconfig.setup({
-	ensure_installed = vim.tbl_keys(servers),
-})
+-- mason_lspconfig.setup({
+-- 	ensure_installed = vim.tbl_keys(servers),
+-- })
 if not table.unpack then
 	table.unpack = unpack
 end
