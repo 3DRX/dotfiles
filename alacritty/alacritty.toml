@@ -1,0 +1,16 @@
+import = ["~/.config/alacritty/hyper.toml"]
+
+[window]
+title = ""
+dynamic_title = false
+
+[font]
+normal = { family = "DejaVuSansM Nerd Font Mono", style = "Regular" }
+size = 16
+
+[keyboard]
+bindings = [
+    {key="W", mods="Alt", action="Quit"},
+    {key="V", mods="Alt", action="Paste"},
+    {key="C", mods="Alt", action="Copy"},
+]
