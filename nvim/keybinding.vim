@@ -38,3 +38,5 @@ nnoremap <C-w>l <C-w><
 
 map <C-f> <Nop>
 nmap <C-f> ggVG=<C-o>
+
+xnoremap p P

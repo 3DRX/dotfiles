@@ -30,6 +30,8 @@ set fileencodings=ucs-bom,utf-8,utf-16,gbk,big5,bg18030,latin1
 set cmdheight=0
 set clipboard+=unnamedplus
 
+set termguicolors
+
 "------------------------------------------------------------------------------------
 " imports
 runtime ./plug.vim
@@ -38,13 +40,14 @@ runtime ./plugins/gitgutter.vim
 runtime ./plugins/tex.vim
 lua require("init")
 
-if exists("&termguicolors") && exists("&winblend")
-    syntax enable
-    set termguicolors
-    set winblend=0
-    set wildoptions=pum
-    set pumblend=5
-    set background=dark
-endif
-hi Normal ctermbg=256
-hi clear LineNr
+
+" if exists("&termguicolors") && exists("&winblend")
+"     syntax enable
+"     set termguicolors
+"     set winblend=0
+"     set wildoptions=pum
+"     set pumblend=5
+"     set background=dark
+" endif
+" hi Normal ctermbg=256
+" hi clear LineNr
