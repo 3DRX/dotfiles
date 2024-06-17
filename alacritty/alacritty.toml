@@ -1,4 +1,7 @@
-import = ["~/.config/alacritty/hyper.toml"]
+import = ["~/.config/alacritty/zenbones_light.toml"]
+
+[env]
+TERM = "xterm-256color"
 
 [window]
 title = ""
