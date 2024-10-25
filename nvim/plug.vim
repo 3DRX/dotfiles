@@ -32,6 +32,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCM
 Plug 'debugloop/telescope-undo.nvim'
 Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'NvChad/volt'
+Plug 'NvChad/minty'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'lervag/vimtex'

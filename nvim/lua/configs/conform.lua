@@ -3,7 +3,7 @@ local rustfmt = { "rustfmt" }
 local ruff_format = { "ruff_format" }
 local clang_format = { "clang_format" }
 local stylua = { "stylua" }
-local gofmt = { "gofmt" }
+local gofmt = { "goimports" }
 
 require("conform").setup({
 	formatters_by_ft = {
