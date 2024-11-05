@@ -1,4 +1,5 @@
-import = ["~/.config/alacritty/zenbones_light.toml"]
+[general]
+import = ["~/.config/alacritty/tango_dark.toml"]
 
 [env]
 TERM = "xterm-256color"
@@ -6,10 +7,11 @@ TERM = "xterm-256color"
 [window]
 title = ""
 dynamic_title = false
+decorations = "Buttonless"
 
 [font]
 normal = { family = "DejaVuSansM Nerd Font Mono", style = "Regular" }
-size = 16
+size = 18
 
 [keyboard]
 bindings = [
