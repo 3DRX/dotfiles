@@ -29,14 +29,15 @@ local servers = {
 			"clangd",
 			"--offset-encoding=utf-16",
 		},
+		filetypes = { "c", "cpp", "cc", "C", "m", "h", "hpp" },
 	},
 }
--- mason_lspconfig.setup({
--- 	ensure_installed = vim.tbl_keys(servers),
--- })
 if not table.unpack then
 	table.unpack = unpack
 end
+mason_lspconfig.setup({
+	ensure_installed = { "gopls@v0.15.3" },
+})
 mason_lspconfig.setup_handlers({
 	function(server_name)
 		local server_config = {}
@@ -53,7 +54,15 @@ mason_lspconfig.setup_handlers({
 })
 
 -- configs for manually installed servers --
-require("lspconfig").metals.setup({
+require("lspconfig.configs").protobuf_language_server = {
+	default_config = {
+		cmd = { "protobuf-language-server" },
+		filetypes = { "proto" },
+		root_dir = require("lspconfig.util").root_pattern(".git", ".git/", "build.bazel"),
+		single_file_support = true,
+	},
+}
+require("lspconfig").protobuf_language_server.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
