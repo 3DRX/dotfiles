@@ -44,4 +44,5 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'rcarriga/nvim-notify'
 Plug 'tpope/vim-sleuth'
 Plug 'sindrets/diffview.nvim'
+Plug 'b0o/schemastore.nvim'
 call plug#end()

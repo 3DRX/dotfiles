@@ -20,7 +20,29 @@ local servers = {
 	ruff_lsp = {},
 	pyright = {},
 	rust_analyzer = {},
-	jsonls = {},
+	jsonls = {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+				validate = { enable = true },
+			},
+		},
+	},
+	yamlls = {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		settings = {
+			yaml = {
+				schemaStore = {
+					enable = false,
+					url = "",
+				},
+				schemas = require("schemastore").yaml.schemas(),
+			},
+		},
+	},
 	tsserver = {},
 	clangd = {
 		capabilities = capabilities,
