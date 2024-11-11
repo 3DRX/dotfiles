@@ -15,4 +15,4 @@ end
 
 vim.keymap.set("n", "<leader>ss", ":Shades<CR>", { noremap = true, silent = true, desc = "Toggle Shades" })
 vim.keymap.set("n", "<leader>hh", ":Huefy<CR>", { noremap = true, silent = true, desc = "Toggle Huefy" })
-vim.keymap.set("n", "<leader>mm", toggle_mouse, { noremap = true, silent = true, desc = "Toggle mouse mode" })
+vim.keymap.set("n", "<leader>tm", toggle_mouse, { noremap = true, silent = true, desc = "Toggle mouse mode" })
