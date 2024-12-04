@@ -188,6 +188,7 @@ require("lspsaga").setup({
 	},
 	finder = {
 		default = "def+ref+imp+tyd",
+		layout = "normal",
 		keys = {
 			shuttle = "[w",
 			toggle_or_open = "<CR>",
@@ -211,7 +212,7 @@ vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("n", "<leader>ic", "<cmd>Lspsaga incoming_calls<CR>", opts)
 vim.keymap.set("n", "<leader>oc", "<cmd>Lspsaga outgoing_calls<CR>", opts)
 vim.keymap.set("n", "<leader>ot", "<cmd>Lspsaga outline<CR>", opts)
-vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
 vim.api.nvim_create_user_command("FF", function()
 	vim.lsp.buf.format()
