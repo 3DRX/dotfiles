@@ -45,4 +45,5 @@ Plug 'rcarriga/nvim-notify'
 Plug 'tpope/vim-sleuth'
 Plug 'sindrets/diffview.nvim'
 Plug 'b0o/schemastore.nvim'
+Plug 'OXY2DEV/markview.nvim'
 call plug#end()
