@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Check if cwebp is installed
+if ! command -v cwebp &> /dev/null; then
+    echo "cwebp could not be found. Please install it first."
+    exit 1
+fi
+
+# Loop through all image files in the current directory
+for img in *.jpg *.jpeg *.png *.gif *.JPG *.JPEG *.PNG *.GIF; do
+    # Check if there are no image files
+    if [ ! -e "$img" ]; then
+        echo "No image files found. $img"
+        continue
+    fi
+
+    # Define the output file name
+    output="${img%.*}.webp"
+
+    # Encode the image to WebP format
+    cwebp "$img" -o "$output"
+
+    # Check if the encoding was successful
+    if [ $? -eq 0 ]; then
+        echo "Converted $img to $output"
+    else
+        echo "Failed to convert $img"
+    fi
+done
