@@ -6,24 +6,47 @@ if ! command -v cwebp &> /dev/null; then
     exit 1
 fi
 
-# Loop through all image files in the current directory
-for img in *.jpg *.jpeg *.png *.gif *.JPG *.JPEG *.PNG *.GIF; do
-    # Check if there are no image files
-    if [ ! -e "$img" ]; then
-        echo "No image files found. $img"
-        continue
-    fi
+# Function to convert images in a directory
+convert_images() {
+    local dir="$1"
+    
+    # Loop through all image files in the current directory
+    for img in "$dir"/*.jpg "$dir"/*.jpeg "$dir"/*.png "$dir"/*.gif \
+               "$dir"/*.JPG "$dir"/*.JPEG "$dir"/*.PNG "$dir"/*.GIF; do
+        # Check if there are no image files
+        if [ ! -e "$img" ]; then
+            continue
+        fi
 
-    # Define the output file name
-    output="${img%.*}.webp"
+        # Define the output file name
+        output="${img%.*}.webp"
 
-    # Encode the image to WebP format
-    cwebp "$img" -o "$output"
+        # Encode the image to WebP format
+        cwebp "$img" -o "$output"
 
-    # Check if the encoding was successful
-    if [ $? -eq 0 ]; then
-        echo "Converted $img to $output"
-    else
-        echo "Failed to convert $img"
-    fi
-done
+        # Check if the encoding was successful
+        if [ $? -eq 0 ]; then
+            echo "Converted $img to $output"
+        else
+            echo "Failed to convert $img"
+        fi
+    done
+}
+
+# Function to recursively process directories
+process_directory() {
+    local dir="$1"
+    
+    # Convert images in current directory
+    convert_images "$dir"
+    
+    # Process subdirectories
+    for subdir in "$dir"/*/ ; do
+        if [ -d "$subdir" ]; then
+            process_directory "$subdir"
+        fi
+    done
+}
+
+# Start processing from current directory
+process_directory "."
