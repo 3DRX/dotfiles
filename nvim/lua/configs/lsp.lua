@@ -12,70 +12,41 @@ local function on_attach(_, _)
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
     ]])
 end
-require("mason").setup()
-local mason_lspconfig = require("mason-lspconfig")
--- server configs, if {} is passed, default config is used
-local servers = {
-	lua_ls = {},
-	ruff_lsp = {},
-	pyright = {},
-	rust_analyzer = {},
-	jsonls = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-		settings = {
-			json = {
-				schemas = require("schemastore").json.schemas(),
-				validate = { enable = true },
-			},
+vim.lsp.config("jsonls", {
+	settings = {
+		json = {
+			schemas = require("schemastore").json.schemas(),
+			validate = { enable = true },
 		},
 	},
-	yamlls = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-		settings = {
-			yaml = {
-				schemaStore = {
-					enable = false,
-					url = "",
-				},
-				schemas = require("schemastore").yaml.schemas(),
-			},
-		},
-	},
-	tsserver = {},
-	clangd = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-		cmd = {
-			"clangd",
-			"--offset-encoding=utf-16",
-		},
-		filetypes = { "c", "cpp", "cc", "C", "m", "h", "hpp" },
-	},
-}
-if not table.unpack then
-	table.unpack = unpack
-end
-mason_lspconfig.setup({
-	ensure_installed = { "gopls@v0.15.3" },
 })
-mason_lspconfig.setup_handlers({
-	function(server_name)
-		local server_config = {}
-		if (not servers[server_name]) or servers[server_name] == {} then
-			server_config = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}
-		else
-			server_config = servers[server_name]
-		end
-		require("lspconfig")[server_name].setup(server_config)
-	end,
+vim.lsp.config("yamlls", {
+	settings = {
+		yaml = {
+			schemaStore = {
+				enable = false,
+				url = "",
+			},
+			schemas = require("schemastore").yaml.schemas(),
+		},
+	},
+})
+vim.lsp.config("clangd", {
+	cmd = {
+		"clangd",
+		"--offset-encoding=utf-16",
+	},
+	filetypes = { "c", "cpp", "cc", "C", "m", "h", "hpp" },
+})
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"jsonls",
+		"yamlls",
+		"clangd",
+	},
 })
 
--- configs for manually installed servers --
 require("lspconfig.configs").protobuf_language_server = {
 	default_config = {
 		cmd = { "protobuf-language-server" },
