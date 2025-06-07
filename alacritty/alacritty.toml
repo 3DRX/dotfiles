@@ -4,6 +4,7 @@ TERM = "xterm-256color"
 [window]
 title = ""
 dynamic_title = false
+decorations = "Buttonless"
 
 [font]
 normal = { family = "DejaVuSansM Nerd Font Mono", style = "Regular" }
