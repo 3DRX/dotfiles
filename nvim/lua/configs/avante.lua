@@ -1,3 +1,7 @@
+require("render-markdown").setup({
+	latex = { enabled = false },
+})
+
 require("avante").setup({
 	---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
 	provider = "copilot", -- 在 Aider 模式或 Cursor 规划模式的规划阶段使用的提供者
