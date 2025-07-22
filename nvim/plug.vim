@@ -29,7 +29,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'numToStr/Comment.nvim'
 " Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'debugloop/telescope-undo.nvim'
 Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 Plug 'norcalli/nvim-colorizer.lua'
