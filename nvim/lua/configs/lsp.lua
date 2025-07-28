@@ -72,6 +72,13 @@ require("lspconfig").protobuf_language_server.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
+require("lspconfig").sourcekit.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	cmd = {
+		vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")),
+	},
+})
 --------------------------------------------
 
 -- nvim-cmp

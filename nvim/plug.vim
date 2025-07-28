@@ -27,7 +27,6 @@ Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'williamboman/mason.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'numToStr/Comment.nvim'
-" Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'debugloop/telescope-undo.nvim'
@@ -50,4 +49,6 @@ Plug 'stevearc/dressing.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HakonHarnes/img-clip.nvim'
 Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+Plug 'folke/snacks.nvim'
+Plug 'wojciech-kulik/xcodebuild.nvim'
 call plug#end()

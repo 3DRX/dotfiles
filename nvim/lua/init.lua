@@ -16,3 +16,6 @@ require("configs.noice")
 require("configs.minty")
 require("configs.imgclip")
 require("configs.avante")
+if vim.fn.has("mac") == 1 then
+    require("configs.xcodebuild")
+end
