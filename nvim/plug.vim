@@ -51,4 +51,5 @@ Plug 'HakonHarnes/img-clip.nvim'
 Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 Plug 'folke/snacks.nvim'
 Plug 'wojciech-kulik/xcodebuild.nvim'
+Plug 'davidmh/mdx.nvim'
 call plug#end()
