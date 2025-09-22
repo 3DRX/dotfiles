@@ -60,19 +60,7 @@ require("mason-lspconfig").setup({
 	},
 })
 
-require("lspconfig.configs").protobuf_language_server = {
-	default_config = {
-		cmd = { "protobuf-language-server" },
-		filetypes = { "proto" },
-		root_dir = require("lspconfig.util").root_pattern(".git", ".git/", "build.bazel"),
-		single_file_support = true,
-	},
-}
-require("lspconfig").protobuf_language_server.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-require("lspconfig").sourcekit.setup({
+vim.lsp.config("sourcekit", {
 	capabilities = capabilities,
 	on_attach = on_attach,
 	cmd = {
