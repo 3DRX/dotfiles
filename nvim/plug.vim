@@ -25,7 +25,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'L3MON4D3/LuaSnip', { 'do': 'make install_jsregexp' }
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'williamboman/mason.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master' }
 Plug 'numToStr/Comment.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'branch': 'master' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -48,7 +48,7 @@ Plug 'b0o/schemastore.nvim'
 Plug 'stevearc/dressing.nvim'
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'HakonHarnes/img-clip.nvim'
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+" Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 Plug 'folke/snacks.nvim'
 Plug 'wojciech-kulik/xcodebuild.nvim'
 Plug 'davidmh/mdx.nvim'
