@@ -1,18 +1,37 @@
-require("neodev").setup()
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local function on_attach(_, _)
-	vim.cmd([[
-    highlight! DiagnosticLineNrError guibg=#3b161e guifg=#b01e1e gui=bold
-    highlight! DiagnosticLineNrWarn guibg=#3b2f1e guifg=#a16b1d gui=bold
-    highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#1cbaba gui=bold
-    highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#195dd1 gui=bold
-    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
-    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
-    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
-    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
-    ]])
+require("lazydev").setup({})
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
+
+local function setup_diagnostic_highlights()
+	vim.api.nvim_set_hl(0, "DiagnosticLineNrError", { bg = "#3b161e", fg = "#b01e1e", bold = true })
+	vim.api.nvim_set_hl(0, "DiagnosticLineNrWarn", { bg = "#3b2f1e", fg = "#a16b1d", bold = true })
+	vim.api.nvim_set_hl(0, "DiagnosticLineNrInfo", { bg = "#1E535D", fg = "#1cbaba", bold = true })
+	vim.api.nvim_set_hl(0, "DiagnosticLineNrHint", { bg = "#1E205D", fg = "#195dd1", bold = true })
+
+	vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError", numhl = "DiagnosticLineNrError" })
+	vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn", numhl = "DiagnosticLineNrWarn" })
+	vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo", numhl = "DiagnosticLineNrInfo" })
+	vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint", numhl = "DiagnosticLineNrHint" })
 end
+
+setup_diagnostic_highlights()
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if client and client:supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		end
+	end,
+})
+
+local servers = { "jsonls", "yamlls", "clangd", "ts_ls" }
+
 vim.lsp.config("jsonls", {
+	capabilities = capabilities,
 	settings = {
 		json = {
 			schemas = require("schemastore").json.schemas(),
@@ -21,6 +40,7 @@ vim.lsp.config("jsonls", {
 	},
 })
 vim.lsp.config("yamlls", {
+	capabilities = capabilities,
 	settings = {
 		yaml = {
 			schemaStore = {
@@ -32,6 +52,7 @@ vim.lsp.config("yamlls", {
 	},
 })
 vim.lsp.config("clangd", {
+	capabilities = capabilities,
 	cmd = {
 		"clangd",
 		"--offset-encoding=utf-16",
@@ -39,6 +60,7 @@ vim.lsp.config("clangd", {
 	filetypes = { "c", "cpp", "cc", "C", "m", "h", "hpp" },
 })
 vim.lsp.config("ts_ls", {
+	capabilities = capabilities,
 	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 	init_options = {
 		plugins = {
@@ -59,74 +81,19 @@ require("mason-lspconfig").setup({
 		"clangd",
 	},
 })
+vim.lsp.enable(servers)
 
-vim.lsp.config("sourcekit", {
-	capabilities = capabilities,
-	on_attach = on_attach,
-	cmd = {
-		vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")),
-	},
-})
+if vim.fn.executable("xcrun") == 1 then
+	local sourcekit = vim.trim(vim.fn.system("xcrun -f sourcekit-lsp"))
+	if sourcekit ~= "" then
+		vim.lsp.config("sourcekit", {
+			capabilities = capabilities,
+			cmd = { sourcekit },
+		})
+		vim.lsp.enable("sourcekit")
+	end
+end
 --------------------------------------------
-
--- nvim-cmp
-vim.opt.completeopt = {
-	"menu",
-	"menuone",
-	"noselect",
-}
-local cmp = require("cmp")
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
-	},
-	window = {},
-	mapping = cmp.mapping.preset.insert({
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "path" },
-	}, {
-		{ name = "buffer" },
-	}),
-	sorting = {
-		comparators = {
-			cmp.config.compare.offset,
-			cmp.config.compare.exact,
-			cmp.config.compare.recently_used,
-			cmp.config.compare.kind,
-			cmp.config.compare.sort_text,
-			cmp.config.compare.length,
-			cmp.config.compare.order,
-		},
-	},
-})
--- Set configuration for specific filetype.
-cmp.setup.filetype("gitcommit", {
-	sources = cmp.config.sources({
-		{ name = "cmp_git" },
-	}, {
-		{ name = "buffer" },
-	}),
-})
 
 -- Lspsaga
 require("lspsaga").setup({
@@ -167,7 +134,7 @@ require("lspsaga").setup({
 	},
 	finder = {
 		default = "def+ref+imp+tyd",
-		layout = "normal",
+		layout = "float",
 		keys = {
 			shuttle = "[w",
 			toggle_or_open = "<CR>",

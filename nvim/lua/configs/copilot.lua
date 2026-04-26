@@ -1,7 +1,11 @@
+local auth_file = vim.fn.stdpath("config") .. "/../github-copilot/apps.json"
+auth_file = vim.fs.normalize(auth_file)
+local has_auth = vim.fn.filereadable(auth_file) == 1
+
 require("copilot").setup({
 	panel = {
-		enabled = true,
-		auto_refresh = true,
+		enabled = has_auth,
+		auto_refresh = has_auth,
 		keymap = {
 			jump_prev = "[[",
 			jump_next = "]]",
@@ -15,8 +19,8 @@ require("copilot").setup({
 		},
 	},
 	suggestion = {
-		enabled = true,
-		auto_trigger = true,
+		enabled = has_auth,
+		auto_trigger = has_auth,
 		debounce = 75,
 		keymap = {
 			accept = "<Right>",
